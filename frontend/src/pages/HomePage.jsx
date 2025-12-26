@@ -4,62 +4,62 @@ function HomePage() {
     return (
         <div className="App">
             <div className="app-header">
-                <h1>Craft Your Legacy</h1>
-                <p>The elite student portfolio builder for the next generation of professionals.</p>
+                <h1>Professional Student Portfolios</h1>
+                <p>Build, preview, and share your personal portfolio with ease and professionalism.</p>
             </div>
 
             <div className="home-content">
                 <div className="feature-cards">
                     <div className="feature-card glass">
-                        <div className="feature-icon">✨</div>
-                        <h3>Create Portfolio</h3>
-                        <p>Build a world-class portfolio from scratch or leverage AI resume extraction.</p>
+                        <div className="feature-icon">📝</div>
+                        <h3>Create Your Identity</h3>
+                        <p>Fill in your details or upload a resume to generate a professional portfolio in minutes.</p>
                         <Link to="/create" className="btn-primary card-button">
-                            Start Building →
+                            Start Creating →
                         </Link>
                     </div>
 
                     <div className="feature-card glass">
-                        <div className="feature-icon">💎</div>
-                        <h3>Live Preview</h3>
-                        <p>Experience your portfolio through three meticulously designed templates.</p>
+                        <div className="feature-icon">🎨</div>
+                        <h3>Modern Templates</h3>
+                        <p>Choose from professional templates designed to showcase your skills and projects.</p>
                         <Link to="/preview" className="btn-secondary card-button">
-                            Preview Designs →
+                            View Templates →
                         </Link>
                     </div>
 
                     <div className="feature-card glass">
-                        <div className="feature-icon">🌐</div>
-                        <h3>View Your Portfolio</h3>
-                        <p>Access your published portfolio and share it with the world.</p>
+                        <div className="feature-icon">🚀</div>
+                        <h3>Quick Publishing</h3>
+                        <p>Publish your portfolio to a unique live URL and share it with employers instantly.</p>
                         <Link to="/public" className="btn-secondary card-button">
-                            View Published →
+                            Explore Portfolios →
                         </Link>
                     </div>
                 </div>
 
                 <div className="features-list">
-                    <h3>Premium Capabilities</h3>
+                    <h3>Everything You Need</h3>
                     <ul>
                         <li>
-                            <span className="feature-stat">🤖</span>
-                            <span>AI-Accelerated Data Extraction</span>
+                            <span className="feature-stat">📄</span>
+                            <span>Resume Data Extraction</span>
                         </li>
                         <li>
-                            <span className="feature-stat">🎨</span>
-                            <span>Three Bespoke Visual Identities</span>
+                            <span className="feature-stat">✨</span>
+                            <span>Professional Visual Styles</span>
                         </li>
                         <li>
-                            <span className="feature-stat">⚡</span>
-                            <span>Real-time Completion Analytics</span>
+                            <span className="feature-stat">📊</span>
+                            <span>Completion Tracking</span>
                         </li>
                         <li>
-                            <span className="feature-stat">🚀</span>
-                            <span>Instant Global Cloud Publishing</span>
+                            <span className="feature-stat">🌐</span>
+                            <span>Live Hosting & Sharing</span>
                         </li>
                         <li>
-                            <span className="feature-stat">🔗</span>
-                            <span>Immutable Public Branding</span>
+                            <span className="feature-stat">📱</span>
+                            <span>Fully Responsive Designs</span>
                         </li>
                     </ul>
                 </div>

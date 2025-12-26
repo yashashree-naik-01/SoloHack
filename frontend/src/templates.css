@@ -1,0 +1,620 @@
+/* =========================================================
+   HACKATHON WINNER TEMPLATES
+   Three Unique, High-Quality Visual Identities
+========================================================= */
+
+/* -------------------------
+   Shared Utilities
+-------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=Oswald:wght@500;700&family=Outfit:wght@300;400;700;900&display=swap');
+
+.preview-container {
+    animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.empty-state {
+    color: #888;
+    text-align: center;
+    padding: 3rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 2px dashed #e0e0e0;
+}
+
+/* =========================================================
+   TEMPLATE 1: MINIMAL (The "Art Gallery" Edition)
+   Vibe: High-End Fashion Magazine, Editorial, Spacious
+   Palette: B&W, Grayscale
+========================================================= */
+.template-minimal {
+    --bg-color: #ffffff;
+    --text-main: #000000;
+    --text-muted: #555555;
+    --line-color: #e5e5e5;
+
+    background: var(--bg-color) !important;
+    color: var(--text-main) !important;
+    font-family: 'Inter', sans-serif !important;
+    max-width: 900px;
+    margin: 0 auto !important;
+    padding: 100px 80px !important;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+    /* Soft ambient shadow */
+}
+
+/* Header */
+.template-minimal .preview-header {
+    text-align: center;
+    margin-bottom: 100px;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.template-minimal .preview-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: #000;
+}
+
+.template-minimal .preview-header h1 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 5rem !important;
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+    margin-bottom: 20px !important;
+    color: #000 !important;
+    letter-spacing: -0.03em;
+}
+
+.template-minimal .preview-header p {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-muted) !important;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* Section Dividers */
+.template-minimal .section-title {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #999 !important;
+    margin: 80px 0 40px !important;
+    text-align: center;
+    position: relative;
+}
+
+/* Skills (Clean Tags) */
+.template-minimal .skills-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.template-minimal .skill-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 0;
+    /* Sharp corners */
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.template-minimal .skill-tag:hover {
+    border-color: #000;
+    background: #000;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Projects (Editorial Cards) */
+.template-minimal .projects-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+}
+
+.template-minimal .project-card {
+    padding: 40px;
+    background: #fcfcfc;
+    border: 1px solid #f0f0f0;
+    transition: all 0.4s ease;
+    text-align: center;
+}
+
+.template-minimal .project-card:hover {
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-color: #ddd;
+}
+
+.template-minimal .project-card h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 2rem !important;
+    margin-bottom: 10px !important;
+    font-style: italic;
+    color: #000 !important;
+}
+
+.template-minimal .project-card p {
+    font-size: 1rem;
+    color: #555 !important;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 20px !important;
+}
+
+.template-minimal .tech-tag {
+    background: transparent;
+    color: #888;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+}
+
+/* Education */
+.template-minimal .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.template-minimal .education-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 20px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+.template-minimal .education-card:last-child {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.template-minimal .education-card h3 {
+    font-weight: 500 !important;
+    font-size: 1.2rem !important;
+    color: #000 !important;
+}
+
+
+/* =========================================================
+   TEMPLATE 2: DEVELOPER (Modern Tech / SaaS)
+   Vibe: Vercel/Linear Style, sleek, dark mode, futuristic
+   Palette: Deep Slate, Electric Blue, Glow
+========================================================= */
+.template-developer {
+    --bg-dark: #0F172A;
+    /* Deep Tech Slate */
+    --bg-card: #1E293B;
+    --accent-primary: #38bdf8;
+    /* Electric Blue */
+    --accent-secondary: #818cf8;
+    /* Indigo */
+    --text-main: #F1F5F9;
+    --text-muted: #94A3B8;
+    --border-glass: rgba(255, 255, 255, 0.1);
+
+    background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%) !important;
+    color: var(--text-main) !important;
+    font-family: 'Inter', sans-serif !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 60px 50px !important;
+    border-radius: 24px;
+    box-shadow: 0 0 0 1px var(--border-glass), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Glow Effect */
+.template-developer::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Header */
+.template-developer .preview-header {
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 40px;
+}
+
+.template-developer .preview-header h1 {
+    font-size: 4rem !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px !important;
+}
+
+/* Removed code syntax pseudo-elements */
+.template-developer .preview-header h1::before,
+.template-developer .preview-header h1::after,
+.template-developer .preview-header p::before {
+    content: none !important;
+}
+
+.template-developer .preview-header p {
+    color: var(--accent-primary) !important;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Section Titles */
+.template-developer .section-title {
+    color: var(--text-main) !important;
+    font-size: 1.5rem !important;
+    margin: 60px 0 30px !important;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.template-developer .section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+    border-radius: 4px;
+}
+
+.template-developer .section-title::after {
+    content: none !important;
+}
+
+/* Skills */
+.template-developer .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.template-developer .skill-tag {
+    background: rgba(30, 41, 59, 0.5);
+    color: #e2e8f0;
+    border: 1px solid var(--border-glass);
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    /* Tech feel for tags only */
+    transition: all 0.3s ease;
+}
+
+.template-developer .skill-tag:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+/* Projects */
+.template-developer .projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.template-developer .project-card {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.7) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    padding: 30px;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.template-developer .project-card:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.template-developer .project-card h3 {
+    color: #fff !important;
+    font-size: 1.4rem !important;
+    margin-bottom: 12px !important;
+    font-weight: 700;
+}
+
+.template-developer .project-card p {
+    color: var(--text-muted) !important;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.template-developer .tech-tag {
+    color: var(--accent-primary);
+    font-size: 0.8rem;
+    margin-right: 12px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.template-developer .tech-tag::before {
+    content: none;
+}
+
+/* Education */
+.template-developer .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.template-developer .education-card {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    border-bottom: none;
+    /* Reset */
+    transition: 0.3s;
+}
+
+.template-developer .education-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-glass);
+}
+
+.template-developer .education-card h3 {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600;
+}
+
+.template-developer .education-card p:first-of-type {
+    color: var(--accent-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   TEMPLATE 3: CREATIVE (The "Swiss Poster" Edition)
+   Vibe: Brutalist, Bold, High Contrast, Design-Forward
+   Palette: Bold Yellow, Black, White - No Gradients
+========================================================= */
+.template-creative {
+    --bg-poster: #FFE600;
+    /* Intense Yellow */
+    --text-poster: #000000;
+    --box-shadow: 10px 10px 0px #000000;
+
+    background: #ffffff !important;
+    color: #000 !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 60px !important;
+    font-family: 'Outfit', sans-serif !important;
+    border: 4px solid #000;
+    box-shadow: 20px 20px 0 #000;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    /* Asymmetrical Grid */
+    gap: 50px;
+}
+
+/* Massive Header */
+.template-creative .preview-header {
+    grid-column: 1 / -1;
+    background: var(--bg-poster);
+    padding: 60px;
+    border: 4px solid #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: rotate(-1deg);
+    margin-bottom: 40px;
+}
+
+.template-creative .preview-header h1 {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 6rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    line-height: 0.9 !important;
+    color: #000 !important;
+    letter-spacing: -2px;
+    margin: 0 !important;
+}
+
+.template-creative .preview-header p {
+    background: #000;
+    color: #fff !important;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: inline-block;
+    width: fit-content;
+    margin-top: 20px;
+    transform: rotate(2deg);
+}
+
+/* Sidebar: Skills */
+.template-creative .skills-section {
+    grid-column: 1;
+}
+
+.template-creative .section-title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 3rem !important;
+    text-transform: uppercase;
+    border-bottom: 4px solid #000;
+    line-height: 1;
+    margin-bottom: 30px !important;
+    color: #000 !important;
+}
+
+.template-creative .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.template-creative .skill-tag {
+    background: #000;
+    color: #fff;
+    padding: 15px 20px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 2px solid #000;
+    transition: all 0.2s;
+}
+
+.template-creative .skill-tag:hover {
+    background: #fff;
+    color: #000;
+    transform: translate(-5px, -5px);
+    box-shadow: 5px 5px 0 #000;
+}
+
+/* Main Content: Projects */
+.template-creative .projects-section {
+    grid-column: 2;
+}
+
+.template-creative .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.template-creative .project-card {
+    border: 4px solid #000;
+    padding: 30px;
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    transition: all 0.2s;
+}
+
+.template-creative .project-card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 15px 15px 0 #000;
+    background: #f4f4f4;
+}
+
+.template-creative .project-card h3 {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 2.5rem !important;
+    text-transform: uppercase;
+    margin-bottom: 10px !important;
+    color: #000 !important;
+}
+
+.template-creative .project-card p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.template-creative .tech-tag {
+    background: var(--bg-poster);
+    color: #000;
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 2px solid #000;
+    margin-right: 10px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Full Width Education */
+.template-creative .education-section {
+    grid-column: 1 / -1;
+    border-top: 4px solid #000;
+    padding-top: 40px;
+}
+
+.template-creative .education-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.template-creative .education-card {
+    background: #000;
+    color: #fff !important;
+    padding: 30px;
+}
+
+.template-creative .education-card h3 {
+    color: var(--bg-poster) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+}
+
+.template-creative .education-card p:first-of-type {
+    color: #fff !important;
+    font-style: italic;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+
+    .template-minimal,
+    .template-developer,
+    .template-creative {
+        padding: 40px 20px !important;
+    }
+
+    .template-creative {
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .template-creative .preview-header h1 {
+        font-size: 4rem !important;
+    }
+}

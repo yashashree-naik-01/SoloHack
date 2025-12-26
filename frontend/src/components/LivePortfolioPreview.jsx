@@ -20,7 +20,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
         setError(null);
 
         try {
-            const res = await fetch(`${API_BASE_URL}/api/portfolio/${username}`);
+            const res = await fetch(`${API_BASE_URL}/api/portfolio/preview/${username}`);
             const result = await res.json();
 
             if (result.success) {
@@ -86,12 +86,38 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
         <div className={`preview-container template-${template}`}>
             <div className="preview-header">
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '8px', color: 'var(--text-main)' }}>
-                    {data.username || 'Student Portfolio'}
+                    {data.fullName || data.username || 'Student Portfolio'}
                 </h1>
+                <p style={{ fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '10px' }}>
+                    {data.username && `@${data.username}`}
+                </p>
                 {data.completionPercentage !== undefined && (
                     <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
                         📊 Completion: {data.completionPercentage}%
                     </p>
+                )}
+
+                {/* Contact Info Row */}
+                <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
+                    {data.email && <span>📧 {data.email}</span>}
+                    {data.contact && <span>📱 {data.contact}</span>}
+                    {data.dob && <span>🎂 {new Date(data.dob).toLocaleDateString()}</span>}
+                </div>
+
+                {/* Social Links Row */}
+                {data.social && (data.social.github || data.social.linkedin) && (
+                    <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '15px' }}>
+                        {data.social.github && (
+                            <a href={data.social.github} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                                GitHub
+                            </a>
+                        )}
+                        {data.social.linkedin && (
+                            <a href={data.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                                LinkedIn
+                            </a>
+                        )}
+                    </div>
                 )}
             </div>
 
@@ -104,6 +130,31 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     <p className="empty-state">No about section added yet</p>
                 )}
             </div>
+
+            {/* Experience / Internships Section */}
+            {(data.experiences?.length > 0 || data.internships?.length > 0) && (
+                <div className="preview-section">
+                    <h2 className="section-title">
+                        {data.experienceType === 'experienced' ? 'Work Experience' : 'Internships'}
+                    </h2>
+
+                    {data.experienceType === 'experienced' && data.experiences?.map((exp, i) => (
+                        <div key={i} className="experience-card" style={{ marginBottom: '20px', borderLeft: '3px solid var(--primary)', paddingLeft: '15px' }}>
+                            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>{exp.role}</h3>
+                            <p style={{ fontWeight: '600', color: 'var(--primary)' }}>{exp.company}</p>
+                            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{exp.duration}</p>
+                        </div>
+                    ))}
+
+                    {data.experienceType !== 'experienced' && data.internships?.map((int, i) => (
+                        <div key={i} className="experience-card" style={{ marginBottom: '20px', borderLeft: '3px solid var(--primary)', paddingLeft: '15px' }}>
+                            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>{int.role}</h3>
+                            <p style={{ fontWeight: '600', color: 'var(--primary)' }}>{int.company}</p>
+                            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{int.duration}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Skills Section */}
             <div className="preview-section">
@@ -143,6 +194,10 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                         ))}
                                     </div>
                                 )}
+                                <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
+                                    {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Live Demo</a>}
+                                    {project.githubLink && <a href={project.githubLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>GitHub Repo</a>}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -164,11 +219,10 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 <p style={{ color: 'var(--primary)', fontWeight: '600', marginBottom: '4px' }}>
                                     {edu.institution}
                                 </p>
-                                {edu.year && (
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                                        {edu.year}
-                                    </p>
-                                )}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                                    {edu.year && <span>Year: {edu.year}</span>}
+                                    {edu.grade && <span>Grade: {edu.grade}</span>}
+                                </div>
                             </div>
                         ))}
                     </div>

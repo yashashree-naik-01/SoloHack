@@ -21,9 +21,9 @@ function PublicPortfolioPage({ username }) {
             const res = await fetch(`${API_BASE_URL}/api/portfolio/${username}`);
             const result = await res.json();
 
-            if (result.success && result.data.isPublished) {
+            if (result.success && result.data.isPublished !== false) {
                 setPortfolio(result.data);
-            } else if (result.success && !result.data.isPublished) {
+            } else if (result.success && result.data.isPublished === false) {
                 setError('not_published');
             } else {
                 setError('not_found');
@@ -94,22 +94,17 @@ function PublicPortfolioPage({ username }) {
         );
     }
 
-    // Success - Show Portfolio
+    // Success - Show Portfolio (Clean View)
     return (
-        <div className="public-portfolio-page">
-            <div className="public-header">
-                <h1>🎓 Student Portfolio</h1>
-                <p className="share-hint">Share this URL: {window.location.href}</p>
-            </div>
+        <div className="public-portfolio-page" style={{ margin: 0, padding: 0, width: '100%', minHeight: '100vh' }}>
+            {/* Header Removed as per user request */}
 
             <LivePortfolioPreview
                 portfolioData={portfolio}
                 template={portfolio.selectedTemplate || 'minimal'}
             />
 
-            <div className="public-footer">
-                <p>Built with Student Portfolio Builder</p>
-            </div>
+            {/* Footer Removed as per user request */}
         </div>
     );
 }

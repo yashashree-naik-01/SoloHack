@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
-const MONGO_URI = 'mongodb://localhost:27017/portfolio-builder';
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/portfolio-builder';
 
 // Middleware
 app.use(cors()); // Enable CORS for all routes
@@ -18,8 +19,11 @@ mongoose.connect(MONGO_URI)
 // Routes
 const portfolioRoutes = require('./routes/portfolio');
 const contentRoutes = require('./routes/content');
+const authRoutes = require('./routes/auth'); // New
+
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/auth', authRoutes); // New
 
 // Health check route
 app.get('/health', (req, res) => {
