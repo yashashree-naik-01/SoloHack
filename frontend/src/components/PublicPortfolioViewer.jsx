@@ -6,61 +6,44 @@ function PublicPortfolioViewer() {
 
     const handleViewPortfolio = () => {
         if (!username) {
-            alert('⚠️ Please enter a username');
+            alert('⚠️ Please enter a target identity');
             return;
         }
 
-        const url = `${API_BASE_URL}/api/portfolio/${username}`;
+        // We should open the frontend route instead of backend API for better UX
+        const url = `${window.location.origin}/portfolio/${username}`;
         window.open(url, '_blank');
     };
 
     return (
-        <div className="card tab-content">
-            <h2>🔍 Explore Portfolios</h2>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '30px' }}>
-                Search for a student's public profile and view their achievements.
+        <div className="card glass">
+            <h2>Global Discovery</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '40px', textAlign: 'center' }}>
+                Search the decentralized network of published student portfolios.
             </p>
 
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ flex: 1, minWidth: '250px' }}>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', maxWidth: '700px', margin: '0 auto' }}>
+                <div className="form-group" style={{ flex: 1, minWidth: '300px', marginBottom: 0 }}>
                     <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleViewPortfolio()}
-                        placeholder="Enter username (e.g., student123)"
-                        style={{
-                            width: '100%',
-                            padding: '16px 20px',
-                            fontSize: '1rem',
-                            border: '2px solid #e2e8f0',
-                            borderRadius: '14px',
-                            background: 'white'
-                        }}
+                        placeholder="Search by username..."
                     />
                 </div>
 
                 <button
                     onClick={handleViewPortfolio}
                     className="btn-primary"
-                    style={{
-                        padding: '16px 36px',
-                        fontSize: '1rem'
-                    }}
                 >
-                    View Portfolio
+                    Initialize Connection
                 </button>
             </div>
 
-            <div style={{
-                marginTop: '30px',
-                padding: '20px',
-                background: 'rgba(79, 70, 229, 0.05)',
-                borderRadius: '16px',
-                border: '1px dashed var(--primary)'
-            }}>
-                <p style={{ fontSize: '0.9rem', color: 'var(--primary)', fontWeight: '500' }}>
-                    💡 Tip: Portfolios are only visible if the student has reached 100% completion and hit "Publish".
+            <div className="glass-inner-section" style={{ marginTop: '40px', textAlign: 'center' }}>
+                <p style={{ fontSize: '0.95rem', color: 'var(--solar-gold)', fontWeight: '600', opacity: 0.8 }}>
+                    💡 Intelligence: Portfolios manifest only after reaching 100% integrity and authorized deployment.
                 </p>
             </div>
         </div>
