@@ -150,6 +150,17 @@ small {
     color: var(--text-muted);
 }
 
+.input-label {
+    display: block;
+    font-size: 1rem;
+    /* Increased from 0.85rem */
+    font-weight: 700;
+    /* Bolder */
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+}
+
 /* -------------------------
    Links
 -------------------------- */

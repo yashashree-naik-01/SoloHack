@@ -246,7 +246,7 @@ function PortfolioForm() {
                     <div className="level-section">
                         <div className="section-header"><h3>3. Experience</h3></div>
                         <div className="form-group">
-                            <label>Experience Level:</label>
+                            <label className="input-label">Experience Level</label>
                             <select value={experienceType} onChange={(e) => setExperienceType(e.target.value)}>
                                 <option value="fresher">Fresher (Internships)</option>
                                 <option value="experienced">Experienced (Full-time)</option>
@@ -255,21 +255,57 @@ function PortfolioForm() {
 
                         {experienceType === 'experienced' ? (
                             <div className="glass" style={{ padding: '20px', borderRadius: '15px' }}>
-                                <h4 style={{ marginBottom: '15px' }}>Add Work Experience</h4>
-                                <input type="text" placeholder="Company Name" value={expCompany} onChange={(e) => setExpCompany(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <input type="text" placeholder="Role / Title" value={expRole} onChange={(e) => setExpRole(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <input type="text" placeholder="Duration (e.g. 2020 - 2022)" value={expDuration} onChange={(e) => setExpDuration(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <button className="btn-secondary card-button" onClick={addExperience}>+ Add Job</button>
-                                <ul>{experiences.map((exp, i) => <li key={i}>{exp.role} at {exp.company}</li>)}</ul>
+                                <h4 style={{ marginBottom: '15px', color: 'var(--primary)' }}>Add Work Experience</h4>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                                    <div>
+                                        <label className="input-label">Company Name</label>
+                                        <input type="text" placeholder="e.g. Google" value={expCompany} onChange={(e) => setExpCompany(e.target.value)} className="form-group-input" />
+                                    </div>
+                                    <div>
+                                        <label className="input-label">Role / Title</label>
+                                        <input type="text" placeholder="e.g. Software Engineer" value={expRole} onChange={(e) => setExpRole(e.target.value)} className="form-group-input" />
+                                    </div>
+                                </div>
+                                <div style={{ marginBottom: '15px' }}>
+                                    <label className="input-label">Duration</label>
+                                    <input type="text" placeholder="e.g. Jan 2020 - Present" value={expDuration} onChange={(e) => setExpDuration(e.target.value)} className="form-group-input" />
+                                </div>
+                                <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addExperience}>+ Add Job Experience</button>
+
+                                <div className="added-items-list" style={{ marginTop: '20px' }}>
+                                    {experiences.map((exp, i) => (
+                                        <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
+                                            <strong>{exp.role}</strong> at {exp.company} <span style={{ float: 'right', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{exp.duration}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         ) : (
                             <div className="glass" style={{ padding: '20px', borderRadius: '15px' }}>
-                                <h4 style={{ marginBottom: '15px' }}>Add Internship (Optional)</h4>
-                                <input type="text" placeholder="Company Name" value={internCompany} onChange={(e) => setInternCompany(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <input type="text" placeholder="Role / Title" value={internRole} onChange={(e) => setInternRole(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <input type="text" placeholder="Duration" value={internDuration} onChange={(e) => setInternDuration(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                                <button className="btn-secondary card-button" onClick={addInternship}>+ Add Internship</button>
-                                <ul>{internships.map((int, i) => <li key={i}>{int.role} at {int.company}</li>)}</ul>
+                                <h4 style={{ marginBottom: '15px', color: 'var(--primary)' }}>Add Internship (Optional)</h4>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                                    <div>
+                                        <label className="input-label">Company Name</label>
+                                        <input type="text" placeholder="e.g. Startup Inc." value={internCompany} onChange={(e) => setInternCompany(e.target.value)} className="form-group-input" />
+                                    </div>
+                                    <div>
+                                        <label className="input-label">Role / Title</label>
+                                        <input type="text" placeholder="e.g. Frontend Intern" value={internRole} onChange={(e) => setInternRole(e.target.value)} className="form-group-input" />
+                                    </div>
+                                </div>
+                                <div style={{ marginBottom: '15px' }}>
+                                    <label className="input-label">Duration</label>
+                                    <input type="text" placeholder="e.g. Summer 2023" value={internDuration} onChange={(e) => setInternDuration(e.target.value)} className="form-group-input" />
+                                </div>
+                                <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addInternship}>+ Add Internship</button>
+
+                                <div className="added-items-list" style={{ marginTop: '20px' }}>
+                                    {internships.map((int, i) => (
+                                        <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
+                                            <strong>{int.role}</strong> at {int.company} <span style={{ float: 'right', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{int.duration}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -280,16 +316,39 @@ function PortfolioForm() {
                     <div className="level-section">
                         <div className="section-header"><h3>4. Projects</h3></div>
                         <div className="glass" style={{ padding: '20px', borderRadius: '15px' }}>
-                            <input type="text" placeholder="Project Title" value={projectTitle} onChange={(e) => setProjectTitle(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                            <textarea placeholder="Description" value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                            <input type="text" placeholder="Tech Stack (comma separated)" value={projectTech} onChange={(e) => setProjectTech(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                            <div style={{ display: 'flex', gap: '10px', marginBottom: 10 }}>
-                                <input type="text" placeholder="Live Link (URL)" value={projectLink} onChange={(e) => setProjectLink(e.target.value)} style={{ flex: 1 }} />
-                                <input type="text" placeholder="GitHub Repo (URL)" value={projectRepo} onChange={(e) => setProjectRepo(e.target.value)} style={{ flex: 1 }} />
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Project Title</label>
+                                <input type="text" placeholder="e.g. Portfolio Builder" value={projectTitle} onChange={(e) => setProjectTitle(e.target.value)} className="form-group-input" />
                             </div>
-                            <button className="btn-secondary card-button" onClick={addProject}>+ Add Project</button>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Project Description</label>
+                                <textarea placeholder="Describe what you built..." value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)} className="form-group-input" style={{ minHeight: '80px' }} />
+                            </div>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Tech Stack</label>
+                                <input type="text" placeholder="e.g. React, Node.js, MongoDB" value={projectTech} onChange={(e) => setProjectTech(e.target.value)} className="form-group-input" />
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                                <div>
+                                    <label className="input-label">Live Link (Optional)</label>
+                                    <input type="text" placeholder="https://..." value={projectLink} onChange={(e) => setProjectLink(e.target.value)} className="form-group-input" />
+                                </div>
+                                <div>
+                                    <label className="input-label">GitHub Repo (Optional)</label>
+                                    <input type="text" placeholder="https://github.com/..." value={projectRepo} onChange={(e) => setProjectRepo(e.target.value)} className="form-group-input" />
+                                </div>
+                            </div>
+                            <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addProject}>+ Add Project</button>
+
+                            <div className="added-items-list" style={{ marginTop: '20px' }}>
+                                {projects.map((p, i) => (
+                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
+                                        <strong>{p.title}</strong>
+                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '5px 0 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.description}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <ul>{projects.map((p, i) => <li key={i}><strong>{p.title}</strong></li>)}</ul>
                     </div>
                 )}
 
@@ -298,15 +357,37 @@ function PortfolioForm() {
                     <div className="level-section">
                         <div className="section-header"><h3>5. Education</h3></div>
                         <div className="glass" style={{ padding: '20px', borderRadius: '15px' }}>
-                            <input type="text" placeholder="Institution" value={institution} onChange={(e) => setInstitution(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                            <input type="text" placeholder="Degree" value={degree} onChange={(e) => setDegree(e.target.value)} className="form-group-input" style={{ marginBottom: 10 }} />
-                            <div style={{ display: 'flex', gap: '10px', marginBottom: 10 }}>
-                                <input type="text" placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} style={{ flex: 1 }} />
-                                <input type="text" placeholder="Grade/CGPA" value={grade} onChange={(e) => setGrade(e.target.value)} style={{ flex: 1 }} />
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                                <div>
+                                    <label className="input-label">Institution Name</label>
+                                    <input type="text" placeholder="e.g. Harvard University" value={institution} onChange={(e) => setInstitution(e.target.value)} className="form-group-input" />
+                                </div>
+                                <div>
+                                    <label className="input-label">Degree / Certificate</label>
+                                    <input type="text" placeholder="e.g. B.Tech Computer Science" value={degree} onChange={(e) => setDegree(e.target.value)} className="form-group-input" />
+                                </div>
                             </div>
-                            <button className="btn-secondary card-button" onClick={addEducation}>+ Add Education</button>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                                <div>
+                                    <label className="input-label">Year of Completion</label>
+                                    <input type="text" placeholder="e.g. 2024" value={year} onChange={(e) => setYear(e.target.value)} className="form-group-input" />
+                                </div>
+                                <div>
+                                    <label className="input-label">Grade / CGPA</label>
+                                    <input type="text" placeholder="e.g. 9.0" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-group-input" />
+                                </div>
+                            </div>
+                            <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addEducation}>+ Add Education</button>
+
+                            <div className="added-items-list" style={{ marginTop: '20px' }}>
+                                {education.map((edu, i) => (
+                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
+                                        <strong>{edu.degree}</strong> <span style={{ color: 'var(--text-secondary)' }}>@ {edu.institution}</span>
+                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>Year: {edu.year} • Grade: {edu.grade}</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <ul>{education.map((edu, i) => <li key={i}>{edu.degree} at {edu.institution}</li>)}</ul>
                     </div>
                 )}
 
