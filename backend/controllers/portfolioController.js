@@ -15,6 +15,7 @@ exports.savePortfolio = async (req, res) => {
             skills,
             tools, // New
             softSkills, // New
+            resume, // New Resume
             experienceType,
             experiences,
             achievements, // New
@@ -52,6 +53,7 @@ exports.savePortfolio = async (req, res) => {
         // Ensure arrays are updated correctly (even if empty)
         if (tools) portfolio.tools = tools;
         if (softSkills) portfolio.softSkills = softSkills;
+        if (resume) portfolio.resume = resume; // Update resume
 
         portfolio.experienceType = experienceType || portfolio.experienceType;
         portfolio.experiences = experiences || portfolio.experiences;
@@ -165,6 +167,7 @@ exports.getPreviewPortfolio = async (req, res) => {
                 skills: portfolio.skills,
                 tools: portfolio.tools, // New
                 softSkills: portfolio.softSkills, // New
+                resume: portfolio.resume, // New Resume
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
                 achievements: portfolio.achievements, // New
@@ -220,6 +223,7 @@ exports.getPublicPortfolio = async (req, res) => {
                 skills: portfolio.skills,
                 tools: portfolio.tools, // New
                 softSkills: portfolio.softSkills, // New
+                resume: portfolio.resume, // New Resume
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
                 achievements: portfolio.achievements, // New

@@ -7,6 +7,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedRole, setSelectedRole] = useState('All');
+    const [lightboxImage, setLightboxImage] = useState(null); // For image lightbox
 
     // Fetch portfolio data if username is provided
     useEffect(() => {
@@ -16,6 +17,17 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             setData(portfolioData);
         }
     }, [username, portfolioData]);
+
+    // Handle ESC key to close lightbox
+    useEffect(() => {
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') {
+                setLightboxImage(null);
+            }
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
 
     const fetchPortfolio = async () => {
         setLoading(true);
@@ -149,8 +161,44 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     // Ensure template is lowercase for consistency
     const safeTemplate = template ? template.toLowerCase() : 'minimal';
 
+    // Smooth scroll to section
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    // Download resume
+    const downloadResume = () => {
+        if (processedData?.resume) {
+            const link = document.createElement('a');
+            link.href = processedData.resume;
+            link.download = `${processedData.fullName || processedData.username}_Resume.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert('No resume uploaded');
+        }
+    };
+
     return (
         <div className={`live-preview-wrapper template-${safeTemplate}`}>
+
+            {/* STICKY NAVIGATION BAR */}
+            <nav className="portfolio-nav">
+                <div className="nav-links">
+                    <button onClick={() => scrollToSection('about-section')} className="nav-link">About</button>
+                    <button onClick={() => scrollToSection('skills-section')} className="nav-link">Skills</button>
+                    <button onClick={() => scrollToSection('projects-section')} className="nav-link">Projects</button>
+                    <button onClick={() => scrollToSection('experience-section')} className="nav-link">Experience</button>
+                    <button onClick={() => scrollToSection('contact-section')} className="nav-link">Contact</button>
+                    {processedData?.resume && (
+                        <button onClick={downloadResume} className="nav-link resume-btn">📄 Resume</button>
+                    )}
+                </div>
+            </nav>
 
             {/* Recruiters View Control Bar */}
             <div className="recruiter-view-controls">
@@ -173,10 +221,16 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             </div>
 
             {/* HERO SECTION */}
-            <section className="preview-section hero-section">
+            <section id="about-section" className="preview-section hero-section">
                 <div className="content-container hero-container">
                     {processedData.profilePicture && (
-                        <img src={processedData.profilePicture} alt="Profile" className="hero-photo" />
+                        <img
+                            src={processedData.profilePicture}
+                            alt="Profile"
+                            className="hero-photo"
+                            onClick={() => setLightboxImage(processedData.profilePicture)}
+                            style={{ cursor: 'pointer' }}
+                        />
                     )}
                     <div className="hero-text">
                         {safeTemplate === 'developer' && <div className="pill-badge">About</div>}
@@ -215,7 +269,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
 
             {/* UNIFIED SKILLS SECTION */}
             {(processedData.skills.length > 0 || (processedData.tools && processedData.tools.length > 0) || (processedData.softSkills && processedData.softSkills.length > 0)) && (
-                <section className="preview-section skills-section">
+                <section id="skills-section" className="preview-section skills-section">
                     <div className="content-container">
                         {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Skills</div></div>
@@ -307,7 +361,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
 
             {/* PROJECTS SECTION */}
             {(processedData.projects && processedData.projects.length > 0) && (
-                <section className="preview-section projects-section">
+                <section id="projects-section" className="preview-section projects-section">
                     <div className="content-container">
                         {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Projects</div></div>
@@ -321,7 +375,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 <div key={index} className={`project-card card-style ${project.isRelevant ? 'relevant-project' : 'dimmed-project'}`}>
                                     {project.image && (
                                         <div className="project-image-container">
-                                            <img src={project.image} alt={project.title} className="project-thumb" />
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="project-thumb"
+                                                onClick={() => setLightboxImage(project.image)}
+                                                style={{ cursor: 'pointer' }}
+                                            />
                                         </div>
                                     )}
                                     <div className="project-content">
@@ -363,7 +423,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 <div key={index} className="achievement-card card-style">
                                     {ach.image && (
                                         <div className="achievement-image-container">
-                                            <img src={ach.image} alt={ach.title} className="achievement-thumb" />
+                                            <img
+                                                src={ach.image}
+                                                alt={ach.title}
+                                                className="achievement-thumb"
+                                                onClick={() => setLightboxImage(ach.image)}
+                                                style={{ cursor: 'pointer' }}
+                                            />
                                         </div>
                                     )}
                                     <div className="achievement-content">
@@ -380,7 +446,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
 
             {/* WORK EXPERIENCE */}
             {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
-                <section className="preview-section experience-section">
+                <section id="experience-section" className="preview-section experience-section">
                     <div className="content-container">
                         {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Experiences</div></div>
@@ -440,7 +506,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
 
             {/* FOOTER */}
             {/* FOOTER */}
-            <footer className="preview-footer">
+            <footer id="contact-section" className="preview-footer">
                 <div className="content-container">
                     <div className="footer-socials">
                         {processedData.social?.github && (
@@ -462,6 +528,65 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     <p>© {new Date().getFullYear()} {processedData.fullName || processedData.username}. Built with SoloHack.</p>
                 </div>
             </footer>
+
+            {/* IMAGE LIGHTBOX MODAL */}
+            {lightboxImage && (
+                <div
+                    className="lightbox-overlay"
+                    onClick={() => setLightboxImage(null)}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 9999,
+                        cursor: 'pointer'
+                    }}
+                >
+                    <button
+                        onClick={() => setLightboxImage(null)}
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '20px',
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            border: 'none',
+                            color: 'white',
+                            fontSize: '2rem',
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'background 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                        onMouseLeave={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                    >
+                        ×
+                    </button>
+                    <img
+                        src={lightboxImage}
+                        alt="Full size"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            maxWidth: '90%',
+                            maxHeight: '90%',
+                            objectFit: 'contain',
+                            borderRadius: '8px',
+                            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+                            cursor: 'default'
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 }

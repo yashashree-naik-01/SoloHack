@@ -24,6 +24,9 @@ const portfolioSchema = new mongoose.Schema({
     tools: { type: [String], default: [] }, // Array of tool names
     softSkills: { type: [String], default: [] }, // Array of soft skills
 
+    // Resume (PDF as Base64)
+    resume: { type: String, default: '' }, // Base64 encoded PDF
+
     // 3. EXPERIENCE (New)
     experienceType: {
         type: String,

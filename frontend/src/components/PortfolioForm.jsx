@@ -12,7 +12,8 @@ function PortfolioForm() {
     // 1. Personal Details
     const [username, setUsername] = useState('');
     const [fullName, setFullName] = useState('');
-    const [profilePicture, setProfilePicture] = useState(''); // Base64 Image
+    const [profilePicture, setProfilePicture] = useState('');
+    const [resume, setResume] = useState(''); // Resume PDF as Base64 // Base64 Image
     const [about, setAbout] = useState('');
     const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
@@ -40,6 +41,20 @@ function PortfolioForm() {
                 setAchievementImage(reader.result);
             };
             reader.readAsDataURL(file);
+        }
+    };
+
+    // Handle Resume Upload (PDF)
+    const handleResumeUpload = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type === 'application/pdf') {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setResume(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please upload a PDF file');
         }
     };
 
@@ -131,6 +146,7 @@ function PortfolioForm() {
                         // Pre-fill form
                         setFullName(p.fullName || '');
                         setProfilePicture(p.profilePicture || '');
+                        setResume(p.resume || ''); // Load resume
                         setAbout(p.about || '');
                         setContact(p.contact || '');
                         setEmail(p.email || '');
@@ -219,6 +235,7 @@ function PortfolioForm() {
             skills: skills.split(',').map(s => s.trim()).filter(s => s),
             tools: tools.split(',').map(t => t.trim()).filter(t => t),
             softSkills: softSkills.split(',').map(s => s.trim()).filter(s => s),
+            resume, // Include resume
             experienceType, experiences, internships, achievements,
             projects,
             social: { github: githubLink, linkedin: linkedinLink }
@@ -281,6 +298,11 @@ function PortfolioForm() {
                         <label>Profile Picture</label>
                         <input type="file" accept="image/*" onChange={handleImageUpload} />
                         {profilePicture && <img src={profilePicture} alt="Profile Preview" style={{ width: '100px', height: '100px', borderRadius: '8px', marginTop: '10px', objectFit: 'cover' }} />}
+                    </div>
+                    <div className="form-group">
+                        <label>Resume (PDF) 📄</label>
+                        <input type="file" accept="application/pdf" onChange={handleResumeUpload} />
+                        {resume && <p style={{ color: 'green', marginTop: '10px' }}>✓ Resume uploaded successfully</p>}
                     </div>
                     <div className="form-group">
                         <label>Username (Logged In)</label>

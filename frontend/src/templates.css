@@ -248,6 +248,124 @@ body {
 }
 
 /* =========================================
+   PORTFOLIO NAVIGATION BAR
+   ========================================= */
+.portfolio-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 70%;
+    height: 2px;
+    background: var(--primary);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Add padding to first section to account for fixed nav */
+.live-preview-wrapper {
+    padding-top: 70px;
+}
+
+/* Template-specific nav styles */
+.template-developer .portfolio-nav {
+    background: rgba(5, 5, 5, 0.95);
+    border-bottom: 1px solid #333;
+}
+
+.template-developer .nav-link {
+    color: #e5e5e5;
+}
+
+.template-developer .nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.template-developer .nav-link::after {
+    background: #ffffff;
+}
+
+.template-creative .portfolio-nav {
+    background: rgba(255, 241, 242, 0.95);
+    border-bottom: 2px solid #db2777;
+}
+
+.template-creative .nav-link {
+    color: #831843;
+    font-weight: 600;
+}
+
+.template-creative .nav-link:hover {
+    color: #db2777;
+    background: rgba(219, 39, 119, 0.1);
+}
+
+.template-creative .nav-link::after {
+    background: #db2777;
+    height: 3px;
+}
+
+@media (max-width: 768px) {
+    .portfolio-nav {
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-links {
+        gap: 0.25rem;
+        justify-content: center;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem;
+    }
+}
+
+/* =========================================
    COMMON SECTIONS (Hero, Grid, etc.)
    ========================================= */
 
