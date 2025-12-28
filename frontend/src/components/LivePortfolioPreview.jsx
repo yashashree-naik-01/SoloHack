@@ -75,16 +75,20 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
         if (processed.projects) {
             processed.projects = processed.projects.map(p => {
                 const { score, text } = getRelevance(p, selectedRole);
-                return { ...p, _score: score, _relevanceText: text };
+                return { ...p, _score: score, _relevanceText: text, isRelevant: score > 0 || selectedRole === 'All' };
             }).sort((a, b) => b._score - a._score);
         }
 
         // 2. Sort Skills
         if (processed.skills) {
-            processed.skills = [...processed.skills].sort((a, b) => {
-                const scoreA = getRelevance({ title: a }, selectedRole).score;
-                const scoreB = getRelevance({ title: b }, selectedRole).score;
-                return scoreB - scoreA;
+            processed.skills = [...processed.skills].map(skill => {
+                const { score } = getRelevance({ title: skill }, selectedRole);
+                return { name: skill, isRelevant: score > 0 || selectedRole === 'All' };
+            }).sort((a, b) => {
+                // Relevant first
+                if (a.isRelevant && !b.isRelevant) return -1;
+                if (!a.isRelevant && b.isRelevant) return 1;
+                return 0;
             });
         }
 
@@ -142,122 +146,142 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     }
 
     return (
-        <div className={`portfolio-wrapper template-${template}`}>
+        <div className={`live-preview-wrapper template-${template}`}>
 
-            {/* --- RECRUITER VIEW CONTROLS (Sticky Top) --- */}
-            <div className="recruiter-bar-wrapper">
-                <div className="recruiter-controls">
-                    <span className="view-label">👀 View as Recruiter:</span>
-                    <div className="role-buttons">
-                        {['All', 'Frontend', 'Backend', 'Full Stack', 'UI/UX', 'Data'].map(role => (
-                            <button
-                                key={role}
-                                onClick={() => setSelectedRole(role)}
-                                className={selectedRole === role ? 'role-btn active' : 'role-btn'}
-                            >
-                                {role}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                {selectedRole !== 'All' && (
-                    <div className="role-hint">
-                        ✨ Highlighting content relevant for <strong>{selectedRole}</strong> roles
-                    </div>
-                )}
+            {/* Recruiters View Control Bar */}
+            <div className="recruiter-view-controls">
+                <span>👁️ Recruiter View:</span>
+                {Object.keys(ROLES).map(role => (
+                    <button
+                        key={role}
+                        className={`role-btn ${selectedRole === role ? 'active' : ''}`}
+                        onClick={() => setSelectedRole(role)}
+                    >
+                        {role}
+                    </button>
+                ))}
             </div>
 
             {/* HERO SECTION */}
-            <section className="section-hero">
-                <div className="content-container">
-                    <div className="hero-content">
-                        {processedData.profilePicture && (
-                            <img
-                                src={processedData.profilePicture}
-                                alt="Profile"
-                                className="hero-img"
-                            />
-                        )}
-                        <h1 className="hero-name">
-                            {processedData.fullName || processedData.username || 'Student Name'}
-                        </h1>
-                        <p className="hero-role">
-                            {processedData.about ? processedData.about.split('.')[0] + '.' : 'Aspiring Professional'}
-                        </p>
-
-                        <div className="hero-links">
-                            {processedData.email && <span className="icon-link">📧 {processedData.email}</span>}
-                            {processedData.social?.github && (
-                                <a href={processedData.social.github} target="_blank" rel="noreferrer" className="social-btn">GitHub</a>
-                            )}
-                            {processedData.social?.linkedin && (
-                                <a href={processedData.social.linkedin} target="_blank" rel="noreferrer" className="social-btn">LinkedIn</a>
-                            )}
+            <section className="preview-section hero-section">
+                <div className="content-container hero-container">
+                    {processedData.profilePicture && (
+                        <img src={processedData.profilePicture} alt="Profile" className="hero-photo" />
+                    )}
+                    <div className="hero-text">
+                        <h1 className="hero-name">{processedData.fullName || 'Your Name'}</h1>
+                        <p className="hero-title">{processedData.about || 'Your creative bio goes here...'}</p>
+                        <div className="hero-contact-info">
+                            <span>{processedData.email}</span>
+                            {processedData.contact && <span> • {processedData.contact}</span>}
+                            {processedData.location && <span> • {processedData.location}</span>}
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* ABOUT SECTION */}
-            {processedData.about && (
-                <section className="section-about">
+            {/* SKILLS SECTION */}
+            {(processedData.skills.length > 0) && (
+                <section className="preview-section skills-section">
                     <div className="content-container">
-                        <h2 className="section-title">About Me</h2>
-                        <div className="about-text">
-                            <p>{processedData.about}</p>
-                        </div>
-                        <div className="personal-details">
-                            {processedData.contact && <span><strong>Phone:</strong> {processedData.contact}</span>}
-                            {processedData.dob && <span><strong>Born:</strong> {new Date(processedData.dob).toLocaleDateString()}</span>}
-                        </div>
+                        <h2>Technical Skills</h2>
+
+                        {template === 'developer' ? (
+                            /* Developer Template: Marquee Effect */
+                            <div className="skills-marquee-wrapper">
+                                <div className="skills-marquee-track">
+                                    {[...processedData.skills, ...processedData.skills].filter(skill => {
+                                        if (selectedRole === 'All') return true;
+                                        return skill.isRelevant;
+                                    }).map((skill, index) => (
+                                        <span key={`skill-${index}`} className="skill-tag developer-skill">
+                                            {skill.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            /* Minimal & Creative Templates: Grid/Boxes with Highlight */
+                            <div className="skills-grid">
+                                {processedData.skills.map((skill, index) => (
+                                    <span
+                                        key={index}
+                                        className={`skill-box ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                    >
+                                        {skill.name}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </section>
             )}
 
-            {/* SKILLS SECTION (Moved up for better flow) */}
-            {processedData.skills && processedData.skills.length > 0 && (
-                <section className="section-skills">
+            {/* TOOLS SECTION */}
+            {(processedData.tools && processedData.tools.length > 0) && (
+                <section className="preview-section tools-section" style={{ paddingTop: '1rem' }}>
                     <div className="content-container">
-                        <h2 className="section-title">Technical Skills</h2>
+                        <h2>Tools & Software</h2>
+                        {template === 'developer' ? (
+                            <div className="skills-marquee-wrapper">
+                                <div className="skills-marquee-track" style={{ animationDirection: 'reverse' }}>
+                                    {/* Reverse animation for variety */}
+                                    {[...processedData.tools, ...processedData.tools].map((tool, index) => (
+                                        <span key={`tool-${index}`} className="skill-tag developer-skill">
+                                            {tool}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="skills-grid">
+                                {processedData.tools.map((tool, index) => (
+                                    <span key={index} className="skill-box">{tool}</span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            )}
+
+            {/* SOFT SKILLS SECTION */}
+            {(processedData.softSkills && processedData.softSkills.length > 0) && (
+                <section className="preview-section soft-skills-section" style={{ paddingTop: '1rem' }}>
+                    <div className="content-container">
+                        <h2>Soft Skills</h2>
                         <div className="skills-grid">
-                            {processedData.skills.map((skill, index) => (
-                                <div key={index} className="skill-tag" style={{
-                                    opacity: selectedRole === 'All' ? 1 : (getRelevance({ title: skill }, selectedRole).score > 0 ? 1 : 0.4),
-                                    order: selectedRole === 'All' ? 0 : (getRelevance({ title: skill }, selectedRole).score > 0 ? -1 : 1)
-                                }}>
-                                    {skill}
-                                </div>
+                            {processedData.softSkills.map((skill, index) => (
+                                <span key={index} className="skill-box">{skill}</span>
                             ))}
                         </div>
                     </div>
                 </section>
             )}
 
-            {/* EXPERIENCE SECTION */}
+            {/* WORK EXPERIENCE */}
             {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
-                <section className="section-experience">
+                <section className="preview-section experience-section">
                     <div className="content-container">
-                        <h2 className="section-title">
-                            {processedData.experienceType === 'experienced' ? 'Experience' : 'Internships'}
-                        </h2>
-                        <div className="experience-grid">
-                            {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, i) => (
-                                <div key={i} className="experience-card">
-                                    <div className="exp-header">
+                        <h2>Experience</h2>
+                        <div className="experience-list">
+                            {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, index) => (
+                                <div key={index} className="experience-card card-style">
+                                    <div className="card-header">
                                         <h3>{exp.role}</h3>
-                                        <span className="exp-company">{exp.company}</span>
+                                        <span className="company-name">@ {exp.company}</span>
                                     </div>
-                                    <p className="exp-duration">{exp.duration}</p>
+                                    <span className="duration">{exp.duration}</span>
+                                    <p>{exp.description}</p>
                                 </div>
                             ))}
-
-                            {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, i) => (
-                                <div key={i} className="experience-card">
-                                    <div className="exp-header">
+                            {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, index) => (
+                                <div key={index} className="experience-card card-style">
+                                    <div className="card-header">
                                         <h3>{int.role}</h3>
-                                        <span className="exp-company">{int.company}</span>
+                                        <span className="company-name">@ {int.company}</span>
                                     </div>
-                                    <p className="exp-duration">{int.duration}</p>
+                                    <span className="duration">{int.duration}</span>
+                                    <p>{int.description}</p>
                                 </div>
                             ))}
                         </div>
@@ -266,37 +290,32 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             )}
 
             {/* PROJECTS SECTION */}
-            {processedData.projects && processedData.projects.length > 0 && (
-                <section className="section-projects">
+            {(processedData.projects && processedData.projects.length > 0) && (
+                <section className="preview-section projects-section">
                     <div className="content-container">
-                        <h2 className="section-title">Featured Projects</h2>
+                        <h2>Projects</h2>
                         <div className="projects-grid">
                             {processedData.projects.map((project, index) => (
-                                <div key={index} className="project-card" style={{
-                                    opacity: selectedRole === 'All' || project._score > 0 ? 1 : 0.5,
-                                    transform: selectedRole !== 'All' && project._score === 0 ? 'scale(0.98)' : 'none'
-                                }}>
+                                <div key={index} className={`project-card card-style ${project.isRelevant ? 'relevant-project' : 'dimmed-project'}`}>
                                     {project.image && (
-                                        <div className="project-img-wrapper">
-                                            <img src={project.image} alt={project.title} />
+                                        <div className="project-image-container">
+                                            <img src={project.image} alt={project.title} className="project-thumb" />
                                         </div>
                                     )}
                                     <div className="project-content">
-                                        <h3>{project.title}</h3>
-                                        {selectedRole !== 'All' && project._relevanceText && (
-                                            <div className="relevance-badge">
-                                                💡 {project._relevanceText}
-                                            </div>
-                                        )}
+                                        <div className="project-header">
+                                            <h3>{project.title}</h3>
+                                            {project._relevanceText && <span className="relevance-badge">{project._relevanceText}</span>}
+                                        </div>
                                         <p>{project.description}</p>
                                         <div className="tech-stack">
-                                            {project.technologies?.map((tech, idx) => (
-                                                <span key={idx} className="tech-pill">{tech}</span>
+                                            {project.technologies?.map((tech, i) => (
+                                                <span key={i} className="tech-tag">{tech}</span>
                                             ))}
                                         </div>
                                         <div className="project-links">
-                                            {project.link && <a href={project.link} target="_blank" rel="noreferrer">Live Demo →</a>}
-                                            {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer">GitHub ↗</a>}
+                                            {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer">Live Demo</a>}
+                                            {project.githubLink && <a href={project.githubLink} target="_blank" rel="noopener noreferrer">GitHub</a>}
                                         </div>
                                     </div>
                                 </div>
@@ -306,19 +325,42 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 </section>
             )}
 
-            {/* ACHIEVEMENTS SECTION */}
-            {processedData.achievements && processedData.achievements.length > 0 && (
-                <section className="section-achievements">
+            {/* ACHIEVEMENTS SECTION (Refactored to match Project Card style) */}
+            {(processedData.achievements && processedData.achievements.length > 0) && (
+                <section className="preview-section achievements-section">
                     <div className="content-container">
-                        <h2 className="section-title">Achievements</h2>
+                        <h2>Achievements</h2>
                         <div className="achievements-grid">
                             {processedData.achievements.map((ach, index) => (
-                                <div key={index} className="achievement-card">
-                                    {ach.image && <img src={ach.image} alt={ach.title} />}
-                                    <div className="ach-info">
-                                        <h4>{ach.title}</h4>
-                                        {ach.link && <a href={ach.link} target="_blank" rel="noreferrer">View Certificate</a>}
+                                <div key={index} className="achievement-card card-style">
+                                    {ach.image && (
+                                        <div className="achievement-image-container">
+                                            <img src={ach.image} alt={ach.title} className="achievement-thumb" />
+                                        </div>
+                                    )}
+                                    <div className="achievement-content">
+                                        <h3>{ach.title}</h3>
+                                        <p>{ach.description}</p>
+                                        {ach.link && <a href={ach.link} target="_blank" rel="noopener noreferrer">View Certificate</a>}
                                     </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* EDUCATION SECTION */}
+            {(processedData.education && processedData.education.length > 0) && (
+                <section className="preview-section education-section">
+                    <div className="content-container">
+                        <h2>Education</h2>
+                        <div className="education-grid">
+                            {processedData.education.map((edu, index) => (
+                                <div key={index} className="education-card card-style">
+                                    <h3>{edu.degree}</h3>
+                                    <p className="institution">{edu.institution}</p>
+                                    <span className="year">{edu.year}</span>
                                 </div>
                             ))}
                         </div>
@@ -327,12 +369,11 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             )}
 
             {/* FOOTER */}
-            <footer className="portfolio-footer">
+            <footer className="preview-footer">
                 <div className="content-container">
                     <p>© {new Date().getFullYear()} {processedData.fullName || processedData.username}. Built with SoloHack.</p>
                 </div>
             </footer>
-
         </div>
     );
 }

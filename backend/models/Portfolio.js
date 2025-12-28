@@ -38,6 +38,9 @@ const portfolioSchema = new mongoose.Schema({
     // 4. ACHIEVEMENTS (New)
     achievements: [{
         title: String,
+        skills: [String],
+        tools: [String],
+        softSkills: [String],
         image: String,
         link: String
     }],

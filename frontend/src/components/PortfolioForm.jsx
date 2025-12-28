@@ -11,7 +11,7 @@ function PortfolioForm() {
 
     // 1. Personal Details
     const [username, setUsername] = useState('');
-    const [fullName, setFullName] = useState(''); // Added missing state
+    const [fullName, setFullName] = useState('');
     const [profilePicture, setProfilePicture] = useState(''); // Base64 Image
     const [about, setAbout] = useState('');
     const [contact, setContact] = useState('');
@@ -45,6 +45,8 @@ function PortfolioForm() {
 
     // 2. Skills
     const [skills, setSkills] = useState('');
+    const [tools, setTools] = useState('');
+    const [softSkills, setSoftSkills] = useState('');
 
     // 3. Experience
     const [experienceType, setExperienceType] = useState('fresher'); // 'fresher' or 'experienced'
@@ -127,18 +129,19 @@ function PortfolioForm() {
                         const p = data.data;
                         setSavedCompletion(p.completionPercentage || 0);
                         // Pre-fill form
-                        setFullName(p.fullName || ''); // Added pre-fill
+                        setFullName(p.fullName || '');
                         setProfilePicture(p.profilePicture || '');
                         setAbout(p.about || '');
                         setContact(p.contact || '');
                         setEmail(p.email || '');
                         setDob(p.dob || '');
                         setSkills((p.skills || []).join(', '));
+                        setTools((p.tools || []).join(', '));
+                        setSoftSkills((p.softSkills || []).join(', '));
                         setProjects(p.projects || []);
-                        // Education removed
                         setExperienceType(p.experienceType || 'fresher');
                         setExperiences(p.experiences || []);
-                        setAchievements(p.achievements || []); // Added
+                        setAchievements(p.achievements || []);
                         setInternships(p.internships || []);
                         if (p.social) {
                             setGithubLink(p.social.github || '');
@@ -214,8 +217,10 @@ function PortfolioForm() {
         const portfolioData = {
             username, fullName, profilePicture, about, contact, email, dob,
             skills: skills.split(',').map(s => s.trim()).filter(s => s),
+            tools: tools.split(',').map(t => t.trim()).filter(t => t),
+            softSkills: softSkills.split(',').map(s => s.trim()).filter(s => s),
             experienceType, experiences, internships, achievements,
-            projects, // Education Removed
+            projects,
             social: { github: githubLink, linkedin: linkedinLink }
         };
 
@@ -239,7 +244,7 @@ function PortfolioForm() {
             }
         } catch (error) {
             console.error('Save Error Details:', error);
-            alert(`❌ SAVE FAILED!\n\nReason: ${error.message}\n\nPlease check the console (F12) for more details.`);
+            alert(`❌ SAVE FAILED!\n\nReason: ${error.message}\n\nPlease check the console(F12) for more details.`);
         }
     };
 
@@ -305,8 +310,16 @@ function PortfolioForm() {
                 <div className="level-section" style={{ display: currentStep === 2 ? 'block' : 'none' }}>
                     <div className="section-header"><h3>2. Skills</h3></div>
                     <div className="form-group">
-                        <label>Skills List (Comma separated)</label>
+                        <label>Technical Skills (Comma separated)</label>
                         <input type="text" placeholder="React, Node.js, Design, etc." value={skills} onChange={(e) => setSkills(e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Tools & Software (Comma separated)</label>
+                        <input type="text" placeholder="VS Code, Git, Figma, Jira" value={tools} onChange={(e) => setTools(e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Soft Skills (Comma separated)</label>
+                        <input type="text" placeholder="Leadership, Communication, Teamwork" value={softSkills} onChange={(e) => setSoftSkills(e.target.value)} />
                     </div>
                 </div>
 
@@ -502,10 +515,6 @@ function PortfolioForm() {
                         </button>
                     )}
                 </div>
-
-                {/* SUCCESS MESSAGE */}
-
-                {/* SUCCESS MESSAGE REMOVED - Saving starts the process, Publishing is separate */}
 
             </div>
         </div>

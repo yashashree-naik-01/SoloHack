@@ -130,13 +130,427 @@ html {
     border-bottom: 1px solid #f4f4f5;
 }
 
-.template-minimal .hero-img {
+/* =========================================
+   GLOBAL RESET & LAYOUT VARIABLES
+   ========================================= */
+:root {
+    --bg-page: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --primary: #3b82f6;
+    --border-color: #cbd5e1;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+    --container-max-width: 1200px;
+    --section-padding: 4rem 2rem;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    background: var(--bg-page);
+}
+
+/* =========================================
+   COMMON LAYOUT UTILITIES
+   ========================================= */
+.live-preview-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-section {
+    width: 100%;
+    padding: var(--section-padding);
+    /* By default sections are full width background capable */
+}
+
+.content-container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Card Styling - Global Base */
+.card-style {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-style:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Recruiter Bar */
+.recruiter-view-controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.role-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+}
+
+.role-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    font-weight: 600;
+}
+
+/* =========================================
+   COMMON SECTIONS (Hero, Grid, etc.)
+   ========================================= */
+
+/* Hero: Side-by-Side Layout */
+.hero-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    justify-content: center;
+    text-align: left;
+}
+
+.hero-photo {
     width: 160px;
+    /* Reduced size by ~20% */
     height: 160px;
-    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 32px;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-name {
+    margin: 0 0 0.5rem 0;
+    font-size: 3rem;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.hero-title {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem 0;
+}
+
+/* Grids */
+.projects-grid,
+.achievements-grid,
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Project & Achievement Cards (Shared) */
+.project-card,
+.achievement-card {
+    overflow: hidden;
+    /* For image */
+    padding: 0 !important;
+    /* Reset padding for image-top flow */
+}
+
+.project-image-container,
+.achievement-image-container {
+    width: 100%;
+    height: 200px;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.project-thumb,
+.achievement-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.project-card:hover .project-thumb,
+.achievement-card:hover .achievement-thumb {
+    transform: scale(1.05);
+}
+
+.project-content,
+.achievement-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.relevance-badge {
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.dimmed-project,
+.dimmed-skill {
+    opacity: 0.4;
+    filter: grayscale(0.8);
+}
+
+
+
+
+/* =========================================
+   TEMPLATE: MINIMAL
+   ========================================= */
+.template-minimal {
+    --bg-page: #f8fafc;
+    --card-bg: #ffffff;
+    --primary: #0f172a;
+    font-family: 'Inter', sans-serif;
+}
+
+.template-minimal .preview-section:nth-child(even) {
+    background: #ffffff;
+}
+
+.template-minimal .hero-name {
+    font-weight: 300;
+    /* Elegant thin */
+    letter-spacing: -1px;
+}
+
+/* Minimal Skills: Small Boxes */
+.template-minimal .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.template-minimal .skill-box {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #475569;
+    transition: all 0.2s;
+}
+
+.template-minimal .highlight-skill {
+    border-color: var(--primary);
+    background: #f1f5f9;
+    color: var(--primary);
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transform: scale(1.05);
+}
+
+/* =========================================
+   TEMPLATE: DEVELOPER
+   ========================================= */
+.template-developer {
+    --bg-page: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #38bdf8;
+    --border-color: #334155;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.template-developer .recruiter-view-controls {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom-color: #334155;
+    color: white;
+}
+
+.template-developer .role-btn {
+    background: #1e293b;
+    color: #cbd5e1;
+    border-color: #475569;
+}
+
+.template-developer .preview-section {
+    border-bottom: 1px dashed #334155;
+}
+
+.template-developer .hero-photo {
+    border-color: var(--primary);
+    border-radius: 12px;
+    /* Slight square for dev */
+}
+
+.template-developer .hero-name {
+    color: var(--primary);
+}
+
+.template-developer .hero-name::before {
+    content: '> ';
+    color: #94a3b8;
+}
+
+/* Developer Skills: Marquee */
+.template-developer .skills-marquee-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 2rem 0;
+    background: #1e293b;
+    /* Distinct track bg */
+    border-radius: 8px;
+}
+
+.template-developer .skills-marquee-track {
+    display: inline-block;
+    animation: scroll-left 25s linear infinite;
+}
+
+.template-developer .developer-skill {
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    margin: 0 1rem;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* =========================================
+   TEMPLATE: CREATIVE
+   ========================================= */
+.template-creative {
+    --bg-page: #fff1f2;
+    /* Soft pinkish/warm base */
+    --card-bg: #ffffff;
+    --primary: #db2777;
+    /* Pink */
+    --text-main: #831843;
+    font-family: 'Poppins', sans-serif;
+}
+
+.template-creative .hero-photo {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    /* Organic shape */
+    border: none;
+    box-shadow: 10px 10px 0px var(--primary);
+}
+
+.template-creative .hero-name {
+    font-size: 4rem;
+    background: linear-gradient(135deg, #db2777, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.template-creative .card-style {
+    border: 2px solid #000;
+    box-shadow: 6px 6px 0px #000;
+    border-radius: 0;
+    /* Brutalist/Bold */
+    transition: all 0.2s;
+}
+
+.template-creative .card-style:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px #000;
+}
+
+/* Creative Skills: Expressive Boxes */
+.template-creative .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1.5rem;
+}
+
+.template-creative .skill-box {
+    background: white;
+    border: 2px solid #fbcfe8;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    color: #db2777;
+    transition: all 0.3s;
+    cursor: default;
+}
+
+.template-creative .highlight-skill {
+    background: #db2777;
+    color: white;
+    border-color: #831843;
+    transform: rotate(-2deg) scale(1.1);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-photo {
+        width: 140px;
+        height: 140px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .project-image-container,
+    .achievement-image-container {
+        height: 180px;
+    }
 }
 
 .template-minimal .hero-name {
