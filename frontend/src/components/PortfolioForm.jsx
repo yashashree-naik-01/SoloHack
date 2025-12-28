@@ -432,16 +432,7 @@ function PortfolioForm() {
 
                 {/* SUCCESS MESSAGE */}
 
-                {response && (
-                    <div
-                        className="status-box status-complete"
-                        style={{ marginTop: 20 }}
-                    >
-                        <h3>🎉 Portfolio Published!</h3>
-                        <code style={{ display: 'block', padding: '10px', background: 'rgba(0,0,0,0.05)', borderRadius: '8px', margin: '10px 0' }}>{response.url}</code>
-                        <button className="btn-secondary" onClick={() => window.open(response.url, '_blank')}>View Live</button>
-                    </div>
-                )}
+                {/* SUCCESS MESSAGE REMOVED - Saving starts the process, Publishing is separate */}
 
             </div>
         </div>

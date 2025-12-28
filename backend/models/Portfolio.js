@@ -89,7 +89,7 @@ const portfolioSchema = new mongoose.Schema({
 // METHOD: Calculate completion percentage
 portfolioSchema.methods.calculateCompletion = function () {
     let completed = 0;
-    const total = 6; // Increased from 4 to 6 (Added social and contact/experience checks)
+    const total = 4; // Adjusted to 4 to match Frontend (Personal, Skills, Projects, Education)
 
     // 1. Username (Always there)
     // 2. Personal
@@ -108,23 +108,14 @@ portfolioSchema.methods.calculateCompletion = function () {
     const hasEducation = this.education && this.education.length > 0;
     if (hasEducation) completed++;
 
-    // 6. Experience
-    let hasExperience = false;
-    if (this.experienceType === 'experienced' && this.experiences.length > 0) hasExperience = true;
-    else if (this.experienceType === 'fresher') hasExperience = true;
-    if (hasExperience) completed++;
-
-    // 7. Social
-    const hasSocial = this.social && (this.social.github || this.social.linkedin);
-    if (hasSocial) completed++;
+    // Experience & Social are now optional for completion %
+    // This ensures that if the user fills the 4 main sections, they get 100% and can publish.
 
     console.log(`\n--- COMPLETION CALC FOR ${this.username} ---`);
-    console.log(`Personal: ${hasPersonal} (About: ${!!this.about}, Contact: ${!!this.contact}, Email: ${!!this.email})`);
-    console.log(`Skills: ${hasSkills} (${this.skills.length})`);
-    console.log(`Projects: ${hasProjects} (${this.projects.length})`);
-    console.log(`Education: ${hasEducation} (${this.education.length})`);
-    console.log(`Experience: ${hasExperience} (Type: ${this.experienceType})`);
-    console.log(`Social: ${hasSocial}`);
+    console.log(`Personal: ${hasPersonal}`);
+    console.log(`Skills: ${hasSkills}`);
+    console.log(`Projects: ${hasProjects}`);
+    console.log(`Education: ${hasEducation}`);
     console.log(`Score: ${completed}/${total}\n`);
 
     const percentage = Math.round((completed / total) * 100);
