@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 function LivePortfolioPreview({ username, portfolioData, template = 'minimal' }) {
@@ -151,6 +152,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {/* Recruiters View Control Bar */}
             <div className="recruiter-view-controls">
                 <span>👁️ Recruiter View:</span>
+                <button
+                    className={`role-btn ${selectedRole === 'All' ? 'active' : ''}`}
+                    onClick={() => setSelectedRole('All')}
+                >
+                    All
+                </button>
                 {Object.keys(ROLES).map(role => (
                     <button
                         key={role}
@@ -180,80 +187,79 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 </div>
             </section>
 
-            {/* SKILLS SECTION */}
-            {(processedData.skills.length > 0) && (
+            {/* UNIFIED SKILLS SECTION */}
+            {(processedData.skills.length > 0 || (processedData.tools && processedData.tools.length > 0) || (processedData.softSkills && processedData.softSkills.length > 0)) && (
                 <section className="preview-section skills-section">
                     <div className="content-container">
-                        <h2>Technical Skills</h2>
+                        <h2>Skills & Expertise</h2>
 
-                        {template === 'developer' ? (
-                            /* Developer Template: Marquee Effect */
-                            <div className="skills-marquee-wrapper">
-                                <div className="skills-marquee-track">
-                                    {[...processedData.skills, ...processedData.skills].filter(skill => {
-                                        if (selectedRole === 'All') return true;
-                                        return skill.isRelevant;
-                                    }).map((skill, index) => (
-                                        <span key={`skill-${index}`} className="skill-tag developer-skill">
-                                            {skill.name}
-                                        </span>
+                        {/* 1. TECHNICAL SKILLS */}
+                        {processedData.skills.length > 0 && (
+                            <div className="skill-category" style={{ marginBottom: '2rem' }}>
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Technical Domains</h3>
+                                {template === 'developer' ? (
+                                    <div className="skills-marquee-wrapper">
+                                        <div className="skills-marquee-track">
+                                            {[...processedData.skills, ...processedData.skills].filter(skill => {
+                                                if (selectedRole === 'All') return true;
+                                                return skill.isRelevant;
+                                            }).map((skill, index) => (
+                                                <span key={`skill-${index}`} className="skill-tag developer-skill">
+                                                    {skill.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="skills-grid">
+                                        {processedData.skills.map((skill, index) => (
+                                            <span
+                                                key={index}
+                                                className={`skill-box ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {skill.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 2. TOOLS & SOFTWARE */}
+                        {processedData.tools && processedData.tools.length > 0 && (
+                            <div className="skill-category" style={{ marginBottom: '2rem' }}>
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Tools & Software</h3>
+                                {template === 'developer' ? (
+                                    <div className="skills-marquee-wrapper">
+                                        <div className="skills-marquee-track" style={{ animationDirection: 'reverse' }}>
+                                            {[...processedData.tools, ...processedData.tools].map((tool, index) => (
+                                                <span key={`tool-${index}`} className="skill-tag developer-skill">
+                                                    {tool}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="skills-grid">
+                                        {processedData.tools.map((tool, index) => (
+                                            <span key={index} className="skill-box">{tool}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 3. SOFT SKILLS */}
+                        {processedData.softSkills && processedData.softSkills.length > 0 && (
+                            <div className="skill-category">
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Soft Skills</h3>
+                                <div className="skills-grid">
+                                    {processedData.softSkills.map((skill, index) => (
+                                        <span key={index} className="skill-box">{skill}</span>
                                     ))}
                                 </div>
                             </div>
-                        ) : (
-                            /* Minimal & Creative Templates: Grid/Boxes with Highlight */
-                            <div className="skills-grid">
-                                {processedData.skills.map((skill, index) => (
-                                    <span
-                                        key={index}
-                                        className={`skill-box ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
-                                    >
-                                        {skill.name}
-                                    </span>
-                                ))}
-                            </div>
                         )}
-                    </div>
-                </section>
-            )}
-
-            {/* TOOLS SECTION */}
-            {(processedData.tools && processedData.tools.length > 0) && (
-                <section className="preview-section tools-section" style={{ paddingTop: '1rem' }}>
-                    <div className="content-container">
-                        <h2>Tools & Software</h2>
-                        {template === 'developer' ? (
-                            <div className="skills-marquee-wrapper">
-                                <div className="skills-marquee-track" style={{ animationDirection: 'reverse' }}>
-                                    {/* Reverse animation for variety */}
-                                    {[...processedData.tools, ...processedData.tools].map((tool, index) => (
-                                        <span key={`tool-${index}`} className="skill-tag developer-skill">
-                                            {tool}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="skills-grid">
-                                {processedData.tools.map((tool, index) => (
-                                    <span key={index} className="skill-box">{tool}</span>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </section>
-            )}
-
-            {/* SOFT SKILLS SECTION */}
-            {(processedData.softSkills && processedData.softSkills.length > 0) && (
-                <section className="preview-section soft-skills-section" style={{ paddingTop: '1rem' }}>
-                    <div className="content-container">
-                        <h2>Soft Skills</h2>
-                        <div className="skills-grid">
-                            {processedData.softSkills.map((skill, index) => (
-                                <span key={index} className="skill-box">{skill}</span>
-                            ))}
-                        </div>
                     </div>
                 </section>
             )}
@@ -369,8 +375,26 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             )}
 
             {/* FOOTER */}
+            {/* FOOTER */}
             <footer className="preview-footer">
                 <div className="content-container">
+                    <div className="footer-socials">
+                        {processedData.social?.github && (
+                            <a href={processedData.social.github} target="_blank" rel="noopener noreferrer" className="social-icon">
+                                <Github size={24} />
+                            </a>
+                        )}
+                        {processedData.social?.linkedin && (
+                            <a href={processedData.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon">
+                                <Linkedin size={24} />
+                            </a>
+                        )}
+                        {processedData.email && (
+                            <a href={`mailto:${processedData.email}`} className="social-icon">
+                                <Mail size={24} />
+                            </a>
+                        )}
+                    </div>
                     <p>© {new Date().getFullYear()} {processedData.fullName || processedData.username}. Built with SoloHack.</p>
                 </div>
             </footer>
