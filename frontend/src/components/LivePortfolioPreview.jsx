@@ -88,14 +88,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '8px', color: 'var(--text-main)' }}>
                     {data.fullName || data.username || 'Student Portfolio'}
                 </h1>
-                <p style={{ fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '10px' }}>
-                    {data.username && `@${data.username}`}
-                </p>
-                {data.completionPercentage !== undefined && (
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
-                        📊 Completion: {data.completionPercentage}%
-                    </p>
-                )}
+
 
                 {/* Contact Info Row */}
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
