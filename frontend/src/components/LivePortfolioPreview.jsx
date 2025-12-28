@@ -176,12 +176,35 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         <img src={processedData.profilePicture} alt="Profile" className="hero-photo" />
                     )}
                     <div className="hero-text">
+                        {template === 'developer' && <div className="pill-badge">About</div>}
                         <h1 className="hero-name">{processedData.fullName || 'Your Name'}</h1>
-                        <p className="hero-title">{processedData.about || 'Your creative bio goes here...'}</p>
+                        <p className="hero-title">{processedData.about || 'Bio goes here...'}</p>
+
+
+                        {/* Developer Stats Grid */}
+                        {template === 'developer' && (
+                            <div className="dev-stats-grid">
+                                <div className="stat-item">
+                                    <span className="stat-label">Months of Experience</span>
+                                    <span className="stat-value">{processedData.experienceType === 'experienced' ? '18+' : '6+'}</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">Internships Completed</span>
+                                    <span className="stat-value">{processedData.internships?.length || 0}+</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">Projects Completed</span>
+                                    <span className="stat-value">{processedData.projects?.length || 0}+</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">No of Skills</span>
+                                    <span className="stat-value">{processedData.skills?.length || 0}+</span>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="hero-contact-info">
                             <span>{processedData.email}</span>
-                            {processedData.contact && <span> • {processedData.contact}</span>}
-                            {processedData.location && <span> • {processedData.location}</span>}
                         </div>
                     </div>
                 </div>
@@ -191,24 +214,23 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.skills.length > 0 || (processedData.tools && processedData.tools.length > 0) || (processedData.softSkills && processedData.softSkills.length > 0)) && (
                 <section className="preview-section skills-section">
                     <div className="content-container">
-                        <h2>Skills & Expertise</h2>
+                        {template === 'developer' ? (
+                            <div className="pill-header-container"><div className="pill-header">Skills</div></div>
+                        ) : (
+                            <h2>Skills & Expertise</h2>
+                        )}
 
                         {/* 1. TECHNICAL SKILLS */}
                         {processedData.skills.length > 0 && (
                             <div className="skill-category" style={{ marginBottom: '2rem' }}>
-                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Technical Domains</h3>
+                                {/* Hide subheaders for developer if using pill layout, or keep them small */}
+                                {template !== 'developer' && <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Technical Domains</h3>}
+
                                 {template === 'developer' ? (
-                                    <div className="skills-marquee-wrapper">
-                                        <div className="skills-marquee-track">
-                                            {[...processedData.skills, ...processedData.skills].filter(skill => {
-                                                if (selectedRole === 'All') return true;
-                                                return skill.isRelevant;
-                                            }).map((skill, index) => (
-                                                <span key={`skill-${index}`} className="skill-tag developer-skill">
-                                                    {skill.name}
-                                                </span>
-                                            ))}
-                                        </div>
+                                    <div className="skills-pill-container">
+                                        {[...processedData.skills].map((skill, index) => (
+                                            <span key={index} className="skill-pill">{skill.name}</span>
+                                        ))}
                                     </div>
                                 ) : (
                                     <div className="skills-grid">
@@ -228,16 +250,17 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         {/* 2. TOOLS & SOFTWARE */}
                         {processedData.tools && processedData.tools.length > 0 && (
                             <div className="skill-category" style={{ marginBottom: '2rem' }}>
-                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Tools & Software</h3>
                                 {template === 'developer' ? (
-                                    <div className="skills-marquee-wrapper">
-                                        <div className="skills-marquee-track" style={{ animationDirection: 'reverse' }}>
-                                            {[...processedData.tools, ...processedData.tools].map((tool, index) => (
-                                                <span key={`tool-${index}`} className="skill-tag developer-skill">
-                                                    {tool}
-                                                </span>
-                                            ))}
-                                        </div>
+                                    <div className="pill-header-container" style={{ marginTop: '3rem' }}><div className="pill-header">Tools / Software</div></div>
+                                ) : (
+                                    <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Tools & Software</h3>
+                                )}
+
+                                {template === 'developer' ? (
+                                    <div className="skills-pill-container">
+                                        {processedData.tools.map((tool, index) => (
+                                            <span key={index} className="skill-pill">{tool}</span>
+                                        ))}
                                     </div>
                                 ) : (
                                     <div className="skills-grid">
@@ -252,12 +275,25 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         {/* 3. SOFT SKILLS */}
                         {processedData.softSkills && processedData.softSkills.length > 0 && (
                             <div className="skill-category">
-                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Soft Skills</h3>
-                                <div className="skills-grid">
-                                    {processedData.softSkills.map((skill, index) => (
-                                        <span key={index} className="skill-box">{skill}</span>
-                                    ))}
-                                </div>
+                                {template === 'developer' ? (
+                                    <div className="pill-header-container" style={{ marginTop: '3rem' }}><div className="pill-header">Soft Skills</div></div>
+                                ) : (
+                                    <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Soft Skills</h3>
+                                )}
+
+                                {template === 'developer' ? (
+                                    <div className="skills-pill-container">
+                                        {processedData.softSkills.map((skill, index) => (
+                                            <span key={index} className="skill-pill">{skill}</span>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="skills-grid">
+                                        {processedData.softSkills.map((skill, index) => (
+                                            <span key={index} className="skill-box">{skill}</span>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
@@ -270,7 +306,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.projects && processedData.projects.length > 0) && (
                 <section className="preview-section projects-section">
                     <div className="content-container">
-                        <h2>Projects</h2>
+                        {template === 'developer' ? (
+                            <div className="pill-header-container"><div className="pill-header">Projects</div></div>
+                        ) : (
+                            <h2>Projects</h2>
+                        )}
+                        {template === 'developer' && <h2 className="dev-section-title">My Latest Projects</h2>}
+
                         <div className="projects-grid">
                             {processedData.projects.map((project, index) => (
                                 <div key={index} className={`project-card card-style ${project.isRelevant ? 'relevant-project' : 'dimmed-project'}`}>
@@ -302,11 +344,17 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 </section>
             )}
 
-            {/* ACHIEVEMENTS SECTION (Refactored to match Project Card style) */}
+            {/* ACHIEVEMENTS SECTION */}
             {(processedData.achievements && processedData.achievements.length > 0) && (
                 <section className="preview-section achievements-section">
                     <div className="content-container">
-                        <h2>Achievements</h2>
+                        {template === 'developer' ? (
+                            <div className="pill-header-container"><div className="pill-header">Achievements</div></div>
+                        ) : (
+                            <h2>Achievements</h2>
+                        )}
+                        {template === 'developer' && <h2 className="dev-section-title">My Achievements</h2>}
+
                         <div className="achievements-grid">
                             {processedData.achievements.map((ach, index) => (
                                 <div key={index} className="achievement-card card-style">
@@ -327,11 +375,17 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 </section>
             )}
 
-            {/* WORK EXPERIENCE (Moved after Achievements) */}
+            {/* WORK EXPERIENCE */}
             {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
                 <section className="preview-section experience-section">
                     <div className="content-container">
-                        <h2>Experience</h2>
+                        {template === 'developer' ? (
+                            <div className="pill-header-container"><div className="pill-header">Experiences</div></div>
+                        ) : (
+                            <h2>Experience</h2>
+                        )}
+                        {template === 'developer' && <h2 className="dev-section-title">My Experiences</h2>}
+
                         <div className="experience-list">
                             {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, index) => (
                                 <div key={index} className="experience-card card-style">
@@ -362,7 +416,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.education && processedData.education.length > 0) && (
                 <section className="preview-section education-section">
                     <div className="content-container">
-                        <h2>Education</h2>
+                        {template === 'developer' ? (
+                            <div className="pill-header-container"><div className="pill-header">Education</div></div>
+                        ) : (
+                            <h2>Education</h2>
+                        )}
+
                         <div className="education-grid">
                             {processedData.education.map((edu, index) => (
                                 <div key={index} className="education-card card-style">

@@ -218,6 +218,8 @@ exports.getPublicPortfolio = async (req, res) => {
                 email: portfolio.email, // New
                 dob: portfolio.dob, // New
                 skills: portfolio.skills,
+                tools: portfolio.tools, // New
+                softSkills: portfolio.softSkills, // New
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
                 achievements: portfolio.achievements, // New

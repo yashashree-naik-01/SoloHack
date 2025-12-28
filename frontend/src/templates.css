@@ -403,116 +403,230 @@ body {
 }
 
 /* =========================================
-   TEMPLATE: DEVELOPER (Terminal / Matrix Theme)
+   3. DEVELOPER TEMPLATE (Modern Dark Redesign)
    ========================================= */
 .template-developer {
-    --bg-page: #000000;
-    --card-bg: rgba(0, 20, 0, 0.8);
-    --text-main: #00ff41;
-    --text-muted: #008f11;
-    --primary: #00ff41;
-    --border-color: #003b00;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    letter-spacing: -0.5px;
+    --bg-color: #050505;
+    --card-bg: #111111;
+    --primary: #ffffff;
+    --text-main: #e5e5e5;
+    --text-muted: #888888;
+    --accent: #222222;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --pill-bg: #1a1a1a;
+    --pill-border: #333333;
+
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-main);
 }
 
-.template-developer .recruiter-view-controls {
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid var(--primary);
-    color: var(--primary);
+.template-developer .content-container {
+    max-width: 1100px;
+    /* Slightly wider for the grid layout */
 }
 
-.template-developer .role-btn {
-    background: #000;
-    color: var(--text-muted);
-    border: 1px solid var(--text-muted);
-    font-family: inherit;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.template-developer .role-btn.active {
-    background: var(--primary);
-    color: black;
-    border-color: var(--primary);
-    box-shadow: 0 0 10px var(--primary);
-}
-
-.template-developer .preview-section {
-    border-bottom: 1px dashed var(--text-muted);
+/* --- Hero Section --- */
+.template-developer .hero-container {
+    align-items: flex-start;
+    /* Align top */
+    padding-top: 5rem;
 }
 
 .template-developer .hero-photo {
-    border: 2px solid var(--primary);
-    border-radius: 0;
-    /* Strict square for terminal look */
-    filter: grayscale(100%) contrast(1.2) brightness(0.8);
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    width: 280px;
+    /* Larger photo as per design */
+    height: 380px;
+    /* Portrait rectangle */
+    border-radius: 12px;
+    /* Soft corners */
+    object-fit: cover;
+    border: 1px solid #333;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    /* Deep shadow */
+}
+
+.template-developer .hero-text {
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.template-developer .pill-badge {
+    display: inline-block;
+    background: var(--pill-bg);
+    color: var(--text-muted);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--pill-border);
 }
 
 .template-developer .hero-name {
+    font-size: 3.5rem;
+    font-weight: 700;
     color: var(--primary);
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-    position: relative;
-    display: inline-block;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    text-shadow: none;
+    /* Remove old neon glow */
 }
 
-.template-developer .hero-name::before {
-    content: '> ';
+.template-developer .hero-title {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+/* Stats Grid */
+.template-developer .dev-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    max-width: 500px;
+}
+
+.template-developer .stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.template-developer .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.template-developer .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--primary);
-    margin-right: 10px;
 }
 
-.template-developer .hero-name::after {
-    content: '_';
-    animation: blink 1s step-end infinite;
+/* --- Pill Headers --- */
+.template-developer .pill-header-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
+.template-developer .pill-header {
+    background: var(--pill-bg);
+    color: var(--text-main);
+    padding: 8px 24px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    border: 1px solid var(--pill-border);
 }
 
+.template-developer .dev-section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+}
+
+/* --- Skills --- */
+.template-developer .skills-pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.template-developer .skill-pill {
+    background: transparent;
+    border: 1px solid var(--pill-border);
+    color: var(--text-main);
+    padding: 10px 24px;
+    border-radius: 8px;
+    /* Slightly rounded rects */
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.template-developer .skill-pill:hover {
+    border-color: var(--text-muted);
+    background: var(--pill-bg);
+}
+
+/* --- Cards (Projects/Achievements) --- */
 .template-developer .card-style {
-    border: 1px solid var(--border-color);
-    border-radius: 0;
+    background: var(--card-bg);
+    border: 1px solid #222;
+    border-radius: 12px;
     box-shadow: none;
-    transition: all 0.2s;
+    padding: 0;
+    /* Remove default padding for image flush */
+    overflow: hidden;
+    transition: transform 0.2s ease;
 }
 
 .template-developer .card-style:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    border-color: #333;
 }
 
-/* Developer Skills: Marquee */
-.template-developer .skills-marquee-wrapper {
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
+.template-developer .project-image-container,
+.template-developer .achievement-image-container {
+    height: 180px;
+    /* Taller images from design */
+    border-bottom: 1px solid #222;
+    margin-bottom: 0;
+}
+
+.template-developer .project-content,
+.template-developer .achievement-content {
+    padding: 1.5rem;
+}
+
+.template-developer .project-header h3,
+.template-developer .achievement-content h3 {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.template-developer .project-links a,
+.template-developer .achievement-content a {
+    color: var(--primary);
+    border: 1px solid var(--pill-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: #151515;
+}
+
+.template-developer .project-links a:hover {
+    background: #222;
+}
+
+/* --- Experience (Row Layout) --- */
+.template-developer .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Space between rows */
+}
+
+.template-developer .experience-card {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    /* Left: Role info, Right: Desc */
+    gap: 2rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #222;
+    /* Line separator */
     padding: 2rem 0;
-    background: #050505;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    border-radius: 0;
-}
-
-.template-developer .skills-marquee-track {
-    display: inline-block;
-    animation: scroll-left 25s linear infinite;
-}
-
-.template-developer .developer-skill {
-    display: inline-block;
-    padding: 0.5rem 2rem;
     margin: 0 1rem;
     background: #001100;
     color: var(--primary);
@@ -748,130 +862,7 @@ body {
     padding: 32px;
 }
 
-/* =========================================================
-   THEME 2: DEVELOPER (Dark Tech / Terminal)
-   - Monospace accents
-   - Dark Mode
-   - Grid lines background
-========================================================= */
-.template-developer {
-    font-family: 'Inter', sans-serif;
-    background: #09090b;
-    color: #e4e4e7;
-}
 
-.template-developer .recruiter-controls {
-    background: rgba(24, 24, 27, 0.9);
-    border: 1px solid #27272a;
-}
-
-.template-developer .view-label {
-    color: #a1a1aa;
-}
-
-.template-developer .role-btn.active {
-    background: #06b6d4;
-    /* Cyan */
-    color: black;
-}
-
-/* Dev Hero */
-.template-developer .section-hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: #09090b;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    border-bottom: 1px solid #27272a;
-}
-
-.template-developer .hero-content {
-    max-width: 800px;
-}
-
-.template-developer .hero-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 4rem;
-    background: linear-gradient(to right, #ffffff, #94a3b8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 24px;
-}
-
-.template-developer .hero-role {
-    font-size: 1.5rem;
-    color: #06b6d4;
-    /* Cyan accent */
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.template-developer .hero-role::before {
-    content: '> ';
-}
-
-.template-developer .social-btn {
-    background: transparent;
-    border: 1px solid #27272a;
-    color: #e4e4e7;
-    padding: 10px 24px;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.template-developer .social-btn:hover {
-    border-color: #06b6d4;
-    color: #06b6d4;
-}
-
-/* Dev Sections */
-.template-developer section {
-    padding: 120px 0;
-    border-bottom: 1px solid #18181b;
-}
-
-.template-developer .section-title {
-    font-family: 'JetBrains Mono', monospace;
-    color: #06b6d4;
-    font-size: 1.5rem;
-    margin-bottom: 60px;
-}
-
-.template-developer .section-title::before {
-    content: '# ';
-}
-
-/* Dev Projects */
-.template-developer .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Strict 2 col */
-    gap: 40px;
-}
-
-.template-developer .project-card {
-    background: #18181b;
-    border: 1px solid #27272a;
-    border-radius: 8px;
-    padding: 30px;
-    transition: 0.3s;
-}
-
-.template-developer .project-card:hover {
-    border-color: #06b6d4;
-    transform: translateY(-5px);
-}
-
-.template-developer .tech-pill {
-    background: rgba(6, 182, 212, 0.1);
-    color: #06b6d4;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-family: 'JetBrains Mono', monospace;
-}
 
 /* =========================================================
    THEME 3: CREATIVE (Bold / Brutalist)
