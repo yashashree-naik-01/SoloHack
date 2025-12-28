@@ -264,36 +264,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 </section>
             )}
 
-            {/* WORK EXPERIENCE */}
-            {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
-                <section className="preview-section experience-section">
-                    <div className="content-container">
-                        <h2>Experience</h2>
-                        <div className="experience-list">
-                            {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, index) => (
-                                <div key={index} className="experience-card card-style">
-                                    <div className="card-header">
-                                        <h3>{exp.role}</h3>
-                                        <span className="company-name">@ {exp.company}</span>
-                                    </div>
-                                    <span className="duration">{exp.duration}</span>
-                                    <p>{exp.description}</p>
-                                </div>
-                            ))}
-                            {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, index) => (
-                                <div key={index} className="experience-card card-style">
-                                    <div className="card-header">
-                                        <h3>{int.role}</h3>
-                                        <span className="company-name">@ {int.company}</span>
-                                    </div>
-                                    <span className="duration">{int.duration}</span>
-                                    <p>{int.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
+
 
             {/* PROJECTS SECTION */}
             {(processedData.projects && processedData.projects.length > 0) && (
@@ -349,6 +320,37 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                         <p>{ach.description}</p>
                                         {ach.link && <a href={ach.link} target="_blank" rel="noopener noreferrer">View Certificate</a>}
                                     </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* WORK EXPERIENCE (Moved after Achievements) */}
+            {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
+                <section className="preview-section experience-section">
+                    <div className="content-container">
+                        <h2>Experience</h2>
+                        <div className="experience-list">
+                            {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, index) => (
+                                <div key={index} className="experience-card card-style">
+                                    <div className="card-header">
+                                        <h3>{exp.role}</h3>
+                                        <span className="company-name">@ {exp.company}</span>
+                                    </div>
+                                    <span className="duration">{exp.duration}</span>
+                                    <p>{exp.description}</p>
+                                </div>
+                            ))}
+                            {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, index) => (
+                                <div key={index} className="experience-card card-style">
+                                    <div className="card-header">
+                                        <h3>{int.role}</h3>
+                                        <span className="company-name">@ {int.company}</span>
+                                    </div>
+                                    <span className="duration">{int.duration}</span>
+                                    <p>{int.description}</p>
                                 </div>
                             ))}
                         </div>

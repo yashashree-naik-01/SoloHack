@@ -13,6 +13,8 @@ exports.savePortfolio = async (req, res) => {
             email,
             dob, // Added dob
             skills,
+            tools, // New
+            softSkills, // New
             experienceType,
             experiences,
             achievements, // New
@@ -46,6 +48,11 @@ exports.savePortfolio = async (req, res) => {
         portfolio.email = email || portfolio.email;
         portfolio.dob = dob || portfolio.dob;
         portfolio.skills = skills || portfolio.skills;
+
+        // Ensure arrays are updated correctly (even if empty)
+        if (tools) portfolio.tools = tools;
+        if (softSkills) portfolio.softSkills = softSkills;
+
         portfolio.experienceType = experienceType || portfolio.experienceType;
         portfolio.experiences = experiences || portfolio.experiences;
         portfolio.achievements = achievements || portfolio.achievements; // New
@@ -156,6 +163,8 @@ exports.getPreviewPortfolio = async (req, res) => {
                 email: portfolio.email, // New
                 dob: portfolio.dob, // New
                 skills: portfolio.skills,
+                tools: portfolio.tools, // New
+                softSkills: portfolio.softSkills, // New
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
                 achievements: portfolio.achievements, // New

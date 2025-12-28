@@ -262,9 +262,9 @@ body {
 }
 
 .hero-photo {
-    width: 160px;
-    /* Reduced size by ~20% */
-    height: 160px;
+    width: 220px;
+    /* Increased size */
+    height: 220px;
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid white;
@@ -294,7 +294,7 @@ body {
 .achievements-grid,
 .education-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
@@ -311,7 +311,7 @@ body {
 .project-image-container,
 .achievement-image-container {
     width: 100%;
-    height: 140px;
+    height: 120px;
     background: #f1f5f9;
     overflow: hidden;
 }
