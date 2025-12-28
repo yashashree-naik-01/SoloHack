@@ -92,17 +92,28 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             }).sort((a, b) => b._score - a._score);
         }
 
-        // 2. Sort Skills
+        // 2. Sort Technical Skills
         if (processed.skills) {
             processed.skills = [...processed.skills].map(skill => {
                 const { score } = getRelevance({ title: skill }, selectedRole);
                 return { name: skill, isRelevant: score > 0 || selectedRole === 'All' };
-            }).sort((a, b) => {
-                // Relevant first
-                if (a.isRelevant && !b.isRelevant) return -1;
-                if (!a.isRelevant && b.isRelevant) return 1;
-                return 0;
-            });
+            }).sort((a, b) => (b.isRelevant - a.isRelevant));
+        }
+
+        // 3. Sort Tools
+        if (processed.tools) {
+            processed.tools = [...processed.tools].map(tool => {
+                const { score } = getRelevance({ title: tool }, selectedRole);
+                return { name: tool, isRelevant: score > 0 || selectedRole === 'All' };
+            }).sort((a, b) => (b.isRelevant - a.isRelevant));
+        }
+
+        // 4. Sort Soft Skills
+        if (processed.softSkills) {
+            processed.softSkills = [...processed.softSkills].map(skill => {
+                const { score } = getRelevance({ title: skill }, selectedRole);
+                return { name: skill, isRelevant: score > 0 || selectedRole === 'All' };
+            }).sort((a, b) => (b.isRelevant - a.isRelevant));
         }
 
         return processed;
@@ -286,7 +297,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {[...processedData.skills].map((skill, index) => (
-                                            <span key={index} className="skill-pill">{skill.name}</span>
+                                            <span
+                                                key={index}
+                                                className={`skill-pill ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {skill.name}
+                                            </span>
                                         ))}
                                     </div>
                                 ) : (
@@ -316,13 +332,23 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {processedData.tools.map((tool, index) => (
-                                            <span key={index} className="skill-pill">{tool}</span>
+                                            <span
+                                                key={index}
+                                                className={`skill-pill ${tool.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {tool.name}
+                                            </span>
                                         ))}
                                     </div>
                                 ) : (
                                     <div className="skills-grid">
                                         {processedData.tools.map((tool, index) => (
-                                            <span key={index} className="skill-box">{tool}</span>
+                                            <span
+                                                key={index}
+                                                className={`skill-box ${tool.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {tool.name}
+                                            </span>
                                         ))}
                                     </div>
                                 )}
@@ -341,13 +367,23 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                                 {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {processedData.softSkills.map((skill, index) => (
-                                            <span key={index} className="skill-pill">{skill}</span>
+                                            <span
+                                                key={index}
+                                                className={`skill-pill ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {skill.name}
+                                            </span>
                                         ))}
                                     </div>
                                 ) : (
                                     <div className="skills-grid">
                                         {processedData.softSkills.map((skill, index) => (
-                                            <span key={index} className="skill-box">{skill}</span>
+                                            <span
+                                                key={index}
+                                                className={`skill-box ${skill.isRelevant ? 'highlight-skill' : 'dimmed-skill'}`}
+                                            >
+                                                {skill.name}
+                                            </span>
                                         ))}
                                     </div>
                                 )}

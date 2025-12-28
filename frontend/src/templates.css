@@ -227,6 +227,34 @@ body {
     font-weight: 600;
 }
 
+/* Developer Recruiter View Dark Mode */
+.template-developer .recruiter-view-controls {
+    background: rgba(15, 15, 15, 0.95);
+    border-bottom: 1px solid #333;
+}
+
+.template-developer .recruiter-view-controls span {
+    color: #eee;
+}
+
+.template-developer .role-btn {
+    background: #1a1a1a;
+    border-color: #333;
+    color: #888;
+}
+
+.template-developer .role-btn:hover {
+    background: #222;
+    color: #fff;
+    border-color: #444;
+}
+
+.template-developer .role-btn.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
 .footer-socials {
     display: flex;
     justify-content: center;
@@ -251,10 +279,8 @@ body {
    PORTFOLIO NAVIGATION BAR
    ========================================= */
 .portfolio-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    right: 0;
-    left: 0;
     z-index: 99;
     /* Below recruiter controls */
     background: rgba(255, 255, 255, 0.95);
@@ -262,6 +288,7 @@ body {
     padding: 1rem 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 .nav-links {
@@ -304,11 +331,6 @@ body {
 
 .nav-link:hover::after {
     transform: translateX(-50%) scaleX(1);
-}
-
-/* Add padding to first section to account for fixed nav */
-.live-preview-wrapper {
-    padding-top: 70px;
 }
 
 /* Template-specific nav styles */
@@ -677,6 +699,30 @@ body {
     background: var(--pill-bg);
 }
 
+.template-developer .highlight-skill {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.template-developer .dimmed-skill {
+    opacity: 0.3;
+    filter: grayscale(1);
+}
+
+.template-developer .relevant-project {
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.template-developer .dimmed-project {
+    opacity: 0.4;
+    filter: grayscale(0.8);
+}
+
 /* --- Cards (Projects/Achievements) --- */
 .template-developer .card-style {
     background: var(--card-bg);
@@ -738,22 +784,71 @@ body {
 
 .template-developer .experience-card {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    /* Left: Role info, Right: Desc */
+    grid-template-columns: 320px 1fr;
     gap: 2rem;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #222;
-    /* Line separator */
-    padding: 2rem 0;
-    margin: 0 1rem;
-    background: #001100;
+    background: var(--card-bg);
+    border: 1px solid var(--pill-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.template-developer .experience-card:hover {
+    border-color: var(--text-muted);
+}
+
+.template-developer .experience-card h3 {
+    font-size: 1.25rem;
     color: var(--primary);
-    border: 1px solid var(--text-muted);
-    border-radius: 0;
-    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.template-developer .company-name {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.template-developer .duration {
+    color: var(--text-muted);
+    font-size: 0.85rem;
     font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.template-developer .experience-card p {
+    color: var(--text-main);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Education Cards Developer */
+.template-developer .education-card {
+    background: var(--card-bg);
+    border: 1px solid var(--pill-border);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.template-developer .education-card h3 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.template-developer .education-card .institution {
+    color: var(--text-muted);
+}
+
+.template-developer .education-card .year {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 4px 12px;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--primary);
 }
 
 @keyframes scroll-left {
