@@ -1,16 +1,16 @@
 /* =========================================================
-   PREMIUM PORTFOLIO THEMES
-   Ethereal Clean • Midnight Cyber • Vibrant Pop
+   PREMIUM PORTFOLIO THEMES - REDESIGNED
+   Concept: Distinct Cards, Generous Spacing, "Portfolio" not "Resume"
 ========================================================= */
 
 /* Shared Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Oswald:wght@500;700&family=Outfit:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* Animation Utilities */
-@keyframes fadeIn {
+/* Global Animation */
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
 
     to {
@@ -20,444 +20,425 @@
 }
 
 .preview-container {
-    animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: fadeInUp 0.8s ease-out;
     width: 100%;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    opacity: 0.5;
-    font-style: italic;
+    /* Increase Base Spacing for all templates */
+    padding-bottom: 100px;
 }
 
 /* =========================================================
-   1. ETHEREAL CLEAN (Formerly Minimal)
-   Concept: High-end tech product page. Soft, airy, premium.
+   1. ETHEREAL CLEAN (Minimal)
+   Style: Apple-esque, Excessive Whitespace, Soft Shadows
 ========================================================= */
 .template-minimal {
-    --bg-page: #F9FAFB;
+    --bg-page: #FAFAFA;
     --bg-card: #FFFFFF;
-    --text-main: #111827;
-    --text-muted: #6B7280;
-    --accent: #10B981;
-    /* Soft Emerald */
-    --shadow-soft: 0 20px 40px -4px rgba(0, 0, 0, 0.08);
-    /* Beautiful diffuse shadow */
-    --border-radius: 24px;
+    --text-main: #18181B;
+    --text-muted: #71717A;
+    --accent: #2563EB;
+    /* Soft Blue */
+    --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+    --border-radius: 20px;
 
     background-color: var(--bg-page) !important;
     color: var(--text-main) !important;
-    font-family: 'Outfit', sans-serif !important;
-    max-width: 1000px;
+    font-family: 'Inter', sans-serif !important;
+    max-width: 1100px;
     margin: 0 auto !important;
-    padding: 80px 40px !important;
-    border-radius: var(--border-radius);
+    padding: 100px 40px !important;
     position: relative;
-    overflow: hidden;
 }
 
-/* Header */
+/* Header - Centered & Spacious */
 .template-minimal .preview-header {
     text-align: center;
-    margin-bottom: 80px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 120px;
+    /* Huge gap */
+    padding: 60px 20px;
+}
+
+.template-minimal .preview-header img {
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s ease;
+}
+
+.template-minimal .preview-header img:hover {
+    transform: scale(1.05);
 }
 
 .template-minimal .preview-header h1 {
-    font-size: 4.5rem !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.03em;
-    color: var(--text-main) !important;
-    margin-bottom: 20px !important;
-    line-height: 1.1;
+    font-size: 5rem !important;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px !important;
+    color: var(--text-main);
+    line-height: 1;
 }
 
 .template-minimal .preview-header p {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     color: var(--text-muted) !important;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
-    font-weight: 400;
+    font-weight: 300;
 }
 
-/* Section Title */
+/* Section Titles - Subtle & Small */
 .template-minimal .section-title {
-    font-size: 0.875rem !important;
+    font-size: 0.9rem !important;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--accent) !important;
-    font-weight: 700;
-    margin-bottom: 40px !important;
+    letter-spacing: 0.2em;
+    color: var(--text-muted) !important;
+    margin-bottom: 60px !important;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+    font-weight: 600;
+    opacity: 0.8;
 }
 
-.template-minimal .section-title::before,
-.template-minimal .section-title::after {
-    content: '';
-    height: 1px;
-    width: 40px;
-    background-color: #E5E7EB;
+/* GRID LAYOUTS FOR CARDS */
+.template-minimal .projects-list,
+.template-minimal .education-list,
+/* kept for legacy class support */
+.template-minimal .achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    /* Wide Cards */
+    gap: 40px;
+    /* Big Gaps */
 }
 
-/* Cards (Projects & Education) */
+/* Card Styling - Clean White Box */
 .template-minimal .project-card,
-.template-minimal .education-card {
+.template-minimal .experience-card,
+.template-minimal .added-item-card {
+    /* Fallback */
     background: var(--bg-card);
     border-radius: var(--border-radius);
     padding: 40px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.template-minimal .project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.15);
-    /* Subtle green glow on hover */
+.template-minimal .project-card:hover,
+.template-minimal .experience-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -5px rgba(37, 99, 235, 0.1);
+    /* Blue glow */
 }
 
-.template-minimal .project-card h3 {
-    font-size: 1.75rem !important;
-    font-weight: 700 !important;
-    margin-bottom: 12px !important;
-}
-
-.template-minimal .project-card p {
-    color: var(--text-muted) !important;
-    line-height: 1.7;
-    margin-bottom: 24px !important;
-}
-
-/* Tags */
-.template-minimal .tech-tag,
-.template-minimal .skill-tag {
-    background: #F3F4F6;
-    color: var(--text-main);
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 0.875rem;
+.template-minimal .project-card h3,
+.template-minimal .experience-card h3 {
+    font-size: 1.5rem !important;
     font-weight: 600;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    border: none;
-    transition: all 0.2s;
+    margin-bottom: 15px !important;
+    color: var(--text-main);
+}
+
+.template-minimal .project-card p,
+.template-minimal .experience-card p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+/* Skills - Clean Pills */
+.template-minimal .skills-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.template-minimal .skill-tag {
+    background: white;
+    border: 1px solid #E4E4E7;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-main);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: 0.2s;
 }
 
 .template-minimal .skill-tag:hover {
-    background: var(--text-main);
-    color: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
 }
 
-/* Grids */
-.template-minimal .projects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-}
-
-.template-minimal .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-.template-minimal .education-list {
-    display: grid;
-    gap: 20px;
-}
 
 /* =========================================================
-   2. MIDNIGHT CYBER (Formerly Developer)
-   Concept: Cyberpunk, Neon, Dark Mode, Glassmorphism.
+   2. MIDNIGHT CYBER (Developer)
+   Style: Dark Mode, Terminal, Tech-Heavy, Contrasting Cards
 ========================================================= */
 .template-developer {
-    --bg-deep: #030712;
-    --bg-glass: rgba(17, 24, 39, 0.7);
-    --primary-neon: #8B5CF6;
-    /* Violet Neon */
-    --secondary-neon: #06B6D4;
-    /* Cyan Neon */
-    --text-white: #F9FAFB;
-    --text-gray: #9CA3AF;
+    --bg-deep: #0B0E14;
+    --bg-card: #151921;
+    --accent-neon: #00E5FF;
+    /* Cyan */
+    --accent-purple: #9D4EDD;
+    --text-white: #F8FAFC;
+    --text-code: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
 
     background-color: var(--bg-deep) !important;
-    background-image:
-        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
-    /* Grid effect */
+    background-size: 40px 40px;
     color: var(--text-white) !important;
     font-family: 'JetBrains Mono', monospace !important;
-    max-width: 1000px;
+    max-width: 1200px;
+    /* Wider */
     margin: 0 auto !important;
     padding: 80px 40px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 80px rgba(139, 92, 246, 0.1);
 }
 
-/* Header */
+/* Header - Side Alignment */
 .template-developer .preview-header {
-    border-left: 4px solid var(--primary-neon);
-    padding-left: 30px;
-    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: 2px solid var(--accent-neon);
+    padding-left: 40px;
+    margin-bottom: 100px;
 }
 
 .template-developer .preview-header h1 {
-    font-family: 'Inter', sans-serif !important;
-    /* Contrast font for name */
     font-size: 4rem !important;
-    font-weight: 800 !important;
     background: linear-gradient(to right, #fff, #94a3b8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px !important;
-    letter-spacing: -0.04em;
 }
 
 .template-developer .preview-header p {
-    color: var(--secondary-neon) !important;
-    font-size: 1.2rem;
-    padding-left: 20px;
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--accent-neon) !important;
+    font-size: 1.25rem;
+    opacity: 0.9;
 }
 
-/* Section Title */
+/* Section Titles - Terminal Style */
 .template-developer .section-title {
-    color: var(--text-white) !important;
-    background: rgba(255, 255, 255, 0.05);
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 4px;
-    margin-bottom: 40px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 1rem !important;
+    color: var(--accent-purple) !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 50px !important;
+    font-weight: 700;
 }
 
 .template-developer .section-title::before {
-    content: '> ';
-    color: var(--primary-neon);
+    content: '~/ ';
+    color: var(--text-code);
 }
 
-/* Cards */
+/* Cards - Dark Blocks with Glow */
 .template-developer .project-card,
-.template-developer .education-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    /* Faint border */
+.template-developer .experience-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     padding: 30px;
-    border-radius: 12px;
+    border-radius: 8px;
+    /* Sharper corners */
+    position: relative;
+    overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.template-developer .project-card:hover {
-    border-color: var(--primary-neon);
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-    transform: scale(1.02);
+.template-developer .project-card::before,
+.template-developer .experience-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-neon), var(--accent-purple));
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.template-developer .project-card h3 {
+.template-developer .project-card:hover,
+.template-developer .experience-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.15);
+    border-color: var(--accent-neon);
+}
+
+.template-developer .project-card:hover::before,
+.template-developer .experience-card:hover::before {
+    opacity: 1;
+}
+
+.template-developer .project-card h3,
+.template-developer .experience-card h3 {
     color: var(--text-white) !important;
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     margin-bottom: 10px !important;
 }
 
-.template-developer .project-card p {
-    color: var(--text-gray) !important;
+.template-developer .project-card p,
+.template-developer .experience-card p {
+    color: var(--text-code) !important;
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+/* Grids */
+.template-developer .projects-list,
+.template-developer .achievements-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Strict 2 column */
+    gap: 30px;
 }
 
 /* Tags */
 .template-developer .skill-tag,
 .template-developer .tech-tag {
-    background: rgba(6, 182, 212, 0.1);
-    color: var(--secondary-neon);
-    border: 1px solid rgba(6, 182, 212, 0.3);
-    padding: 6px 12px;
-    font-size: 0.8rem;
+    background: rgba(0, 229, 255, 0.05);
+    color: var(--accent-neon);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
     border-radius: 4px;
-    transition: 0.2s;
 }
 
-.template-developer .skill-tag:hover {
-    background: var(--secondary-neon);
-    color: #000;
-    box-shadow: 0 0 15px var(--secondary-neon);
-}
-
-/* Grids */
-.template-developer .projects-list,
-.template-developer .education-list {
-    display: grid;
-    gap: 25px;
-}
-
-.template-developer .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
 
 /* =========================================================
-   3. VIBRANT POP (Formerly Creative)
-   Concept: Neo-Brutalism, High Energy, Bold Colors
+   3. VIBRANT POP (Creative)
+   Style: Brutalism, High Contrast, Bold Colors, Offset Shadows
 ========================================================= */
 .template-creative {
-    --bg-pop: #FFF8E7;
-    /* Warm Off-White */
-    --pop-pink: #FF4785;
-    --pop-yellow: #FFCB2B;
-    --pop-black: #1a1a1a;
-    --border-thick: 3px solid var(--pop-black);
-    --shadow-hard: 6px 6px 0px var(--pop-black);
+    --bg-pop: #Fdfbf7;
+    --card-bg: #FFFFFF;
+    --pop-black: #111;
+    --pop-pink: #FF6B6B;
+    --pop-blue: #4ECDC4;
+    --pop-yellow: #FFE66D;
 
     background-color: var(--bg-pop) !important;
     color: var(--pop-black) !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    /* Or default sans if space grotesk not loaded, fallback handled */
-    max-width: 1000px;
+    font-family: 'Outfit', sans-serif !important;
+    max-width: 1100px;
     margin: 0 auto !important;
-    padding: 60px !important;
-    border: var(--border-thick);
-    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+    padding: 80px 50px !important;
 }
 
-/* Header */
+/* Header - Bold Sticker */
 .template-creative .preview-header {
     background: var(--pop-yellow);
     padding: 60px;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    margin-bottom: 80px;
+    border: 4px solid var(--pop-black);
+    box-shadow: 12px 12px 0px var(--pop-black);
+    margin-bottom: 100px;
     transform: rotate(-1deg);
-    display: inline-block;
-    /* Wraps tightly */
-    width: 100%;
+    text-align: center;
 }
 
 .template-creative .preview-header h1 {
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 5rem !important;
-    line-height: 0.9 !important;
-    color: var(--pop-black) !important;
-    margin-bottom: 0 !important;
-    text-shadow: 2px 2px 0px #fff;
+    font-size: 4.5rem !important;
+    line-height: 0.9;
+    margin-bottom: 15px !important;
+    color: var(--pop-black);
 }
 
 .template-creative .preview-header p {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     background: var(--pop-pink);
-    color: #fff !important;
-    padding: 5px 15px;
-    border: var(--border-thick);
+    color: white !important;
     display: inline-block;
-    margin-top: 20px;
-    transform: rotate(2deg);
-}
-
-/* Section Title */
-.template-creative .section-title {
-    font-family: 'Oswald', sans-serif !important;
-    font-size: 2.5rem !important;
-    text-transform: uppercase;
-    border-bottom: 5px solid var(--pop-black);
-    display: inline-block;
-    margin-bottom: 40px !important;
-    padding-right: 20px;
-}
-
-/* Cards */
-.template-creative .project-card {
-    background: #fff;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    padding: 30px;
-    transition: all 0.2s;
-}
-
-.template-creative .project-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 10px 10px 0px var(--pop-black);
-}
-
-.template-creative .project-card h3 {
-    font-family: 'Oswald', sans-serif !important;
-    text-transform: uppercase;
-    font-size: 2rem !important;
-    background: var(--pop-pink);
-    color: #fff !important;
-    display: inline-block;
-    padding: 0 10px;
-    margin-bottom: 15px !important;
-}
-
-.template-creative .education-card {
-    background: var(--pop-black);
-    color: #fff !important;
-    padding: 30px;
+    padding: 5px 20px;
+    transform: rotate(2deg) translateY(10px);
     border: 3px solid var(--pop-black);
-    margin-bottom: 20px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
-.template-creative .education-card h3 {
-    color: var(--pop-yellow) !important;
-    font-size: 1.5rem !important;
+/* Section Title - Huge & Graphic */
+.template-creative .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem !important;
+    text-transform: uppercase;
+    color: var(--pop-black);
+    border-bottom: 6px solid var(--pop-blue);
+    display: inline-block;
+    margin-bottom: 60px !important;
+    transform: rotate(0.5deg);
 }
 
-.template-creative .education-card p {
-    color: #eee !important;
+/* Cards - Pop Art Style */
+.template-creative .project-card,
+.template-creative .experience-card {
+    background: var(--card-bg);
+    border: 3px solid var(--pop-black);
+    box-shadow: 8px 8px 0px var(--pop-black);
+    padding: 30px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    height: 100%;
 }
 
-/* Tags */
-.template-creative .skill-tag {
-    background: #fff;
+.template-creative .project-card:hover,
+.template-creative .experience-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 14px 14px 0px var(--pop-black);
+    background: #fffafa;
+}
+
+.template-creative .project-card h3,
+.template-creative .experience-card h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem !important;
+    background: var(--pop-blue);
+    color: var(--pop-black) !important;
+    display: inline-block;
+    padding: 2px 12px;
+    margin-bottom: 15px !important;
     border: 2px solid var(--pop-black);
+}
+
+.template-creative .projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 50px;
+    /* Huge gap for pop cards */
+}
+
+/* Skills - Scattered Stickers */
+.template-creative .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.template-creative .skill-tag {
+    background: white;
+    border: 3px solid var(--pop-black);
     padding: 10px 20px;
-    font-weight: 700;
+    font-weight: 800;
+    text-transform: uppercase;
     font-size: 1.1rem;
-    box-shadow: 3px 3px 0 var(--pop-black);
+    box-shadow: 4px 4px 0 var(--pop-black);
     transition: 0.2s;
 }
 
 .template-creative .skill-tag:hover {
     background: var(--pop-black);
-    color: #fff;
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 #fff;
-    /* Invert shadow */
+    color: var(--pop-yellow);
+    transform: rotate(3deg) scale(1.1);
 }
 
-/* Grids */
-.template-creative .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.template-creative .projects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-}
-
-/* Responsive adjustments */
+/* MEDIA QUERIES */
 @media (max-width: 768px) {
-
-    .template-minimal,
-    .template-developer,
-    .template-creative {
+    .preview-container {
         padding: 40px 20px !important;
     }
 
@@ -466,14 +447,17 @@
     }
 
     .template-developer .preview-header h1 {
-        font-size: 2.8rem !important;
-    }
-
-    .template-creative .preview-header {
-        padding: 30px;
+        font-size: 2.5rem !important;
     }
 
     .template-creative .preview-header h1 {
-        font-size: 3.5rem !important;
+        font-size: 3rem !important;
+    }
+
+    .template-minimal .projects-list,
+    .template-developer .projects-list,
+    .template-creative .projects-list {
+        grid-template-columns: 1fr;
+        /* Stack on mobile */
     }
 }

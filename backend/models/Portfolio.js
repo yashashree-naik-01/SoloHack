@@ -34,6 +34,14 @@ const portfolioSchema = new mongoose.Schema({
         duration: String,
         details: String // Optional description
     }],
+
+    // 4. ACHIEVEMENTS (New)
+    achievements: [{
+        title: String,
+        image: String,
+        link: String
+    }],
+
     internships: [{
         company: String,
         role: String,
@@ -90,7 +98,7 @@ const portfolioSchema = new mongoose.Schema({
 // METHOD: Calculate completion percentage
 portfolioSchema.methods.calculateCompletion = function () {
     let completed = 0;
-    const total = 4; // Adjusted to 4 to match Frontend (Personal, Skills, Projects, Education)
+    const total = 3; // Adjusted to 3 (Personal, Skills, Projects) - Education Removed
 
     // 1. Username (Always there)
     // 2. Personal
@@ -105,18 +113,13 @@ portfolioSchema.methods.calculateCompletion = function () {
     const hasProjects = this.projects && this.projects.length > 0;
     if (hasProjects) completed++;
 
-    // 5. Education
-    const hasEducation = this.education && this.education.length > 0;
-    if (hasEducation) completed++;
-
-    // Experience & Social are now optional for completion %
-    // This ensures that if the user fills the 4 main sections, they get 100% and can publish.
+    // Experience, Achievements & Social are optional
+    // Education REMOVED
 
     console.log(`\n--- COMPLETION CALC FOR ${this.username} ---`);
     console.log(`Personal: ${hasPersonal}`);
     console.log(`Skills: ${hasSkills}`);
     console.log(`Projects: ${hasProjects}`);
-    console.log(`Education: ${hasEducation}`);
     console.log(`Score: ${completed}/${total}\n`);
 
     const percentage = Math.round((completed / total) * 100);

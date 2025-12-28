@@ -15,6 +15,7 @@ exports.savePortfolio = async (req, res) => {
             skills,
             experienceType,
             experiences,
+            achievements, // New
             internships,
             projects,
             education,
@@ -47,6 +48,7 @@ exports.savePortfolio = async (req, res) => {
         portfolio.skills = skills || portfolio.skills;
         portfolio.experienceType = experienceType || portfolio.experienceType;
         portfolio.experiences = experiences || portfolio.experiences;
+        portfolio.achievements = achievements || portfolio.achievements; // New
         portfolio.internships = internships || portfolio.internships;
         portfolio.projects = projects || portfolio.projects;
         portfolio.education = education || portfolio.education;
@@ -156,6 +158,7 @@ exports.getPreviewPortfolio = async (req, res) => {
                 skills: portfolio.skills,
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
+                achievements: portfolio.achievements, // New
                 internships: portfolio.internships, // New
                 projects: portfolio.projects,
                 education: portfolio.education,
@@ -208,6 +211,7 @@ exports.getPublicPortfolio = async (req, res) => {
                 skills: portfolio.skills,
                 experienceType: portfolio.experienceType, // New
                 experiences: portfolio.experiences, // New
+                achievements: portfolio.achievements, // New
                 internships: portfolio.internships, // New
                 projects: portfolio.projects,
                 education: portfolio.education,

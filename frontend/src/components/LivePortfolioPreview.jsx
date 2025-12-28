@@ -144,22 +144,61 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     <h2 className="section-title">
                         {data.experienceType === 'experienced' ? 'Work Experience' : 'Internships'}
                     </h2>
+                    <div className="experience-list">
+                        {data.experienceType === 'experienced' && data.experiences?.map((exp, i) => (
+                            <div key={i} className="experience-card">
+                                <h3>{exp.role}</h3>
+                                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{exp.company}</p>
+                                <p>{exp.duration}</p>
+                            </div>
+                        ))}
 
-                    {data.experienceType === 'experienced' && data.experiences?.map((exp, i) => (
-                        <div key={i} className="experience-card" style={{ marginBottom: '20px', borderLeft: '3px solid var(--primary)', paddingLeft: '15px' }}>
-                            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>{exp.role}</h3>
-                            <p style={{ fontWeight: '600', color: 'var(--primary)' }}>{exp.company}</p>
-                            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{exp.duration}</p>
-                        </div>
-                    ))}
+                        {data.experienceType !== 'experienced' && data.internships?.map((int, i) => (
+                            <div key={i} className="experience-card">
+                                <h3>{int.role}</h3>
+                                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{int.company}</p>
+                                <p>{int.duration}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
-                    {data.experienceType !== 'experienced' && data.internships?.map((int, i) => (
-                        <div key={i} className="experience-card" style={{ marginBottom: '20px', borderLeft: '3px solid var(--primary)', paddingLeft: '15px' }}>
-                            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>{int.role}</h3>
-                            <p style={{ fontWeight: '600', color: 'var(--primary)' }}>{int.company}</p>
-                            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{int.duration}</p>
-                        </div>
-                    ))}
+            {/* Achievements Section */}
+            {data.achievements && data.achievements.length > 0 && (
+                <div className="preview-section">
+                    <h2 className="section-title">Achievements</h2>
+                    <div className="achievements-list">
+                        {data.achievements.map((ach, index) => (
+                            <div key={index} className="experience-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                                {ach.image && (
+                                    <img
+                                        src={ach.image}
+                                        alt={ach.title}
+                                        style={{
+                                            width: '80px',
+                                            height: '80px',
+                                            borderRadius: '12px',
+                                            objectFit: 'cover'
+                                        }}
+                                    />
+                                )}
+                                <div>
+                                    <h3 style={{ marginBottom: '5px' }}>{ach.title}</h3>
+                                    {ach.link && (
+                                        <a
+                                            href={ach.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ color: 'var(--accent)', fontWeight: '600', textDecoration: 'none' }}
+                                        >
+                                            View Certificate →
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
 
@@ -186,24 +225,20 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     <div className="projects-list">
                         {data.projects.map((project, index) => (
                             <div key={index} className="project-card">
-                                <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: 'var(--primary)' }}>
-                                    {project.title}
-                                </h3>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '12px' }}>
-                                    {project.description}
-                                </p>
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
                                 {project.technologies && project.technologies.length > 0 && (
-                                    <div className="tech-tags">
+                                    <div style={{ marginTop: '15px' }}>
                                         {project.technologies.map((tech, idx) => (
-                                            <span key={idx} className="tech-tag">
+                                            <span key={idx} className="skill-tag" style={{ fontSize: '0.8rem', padding: '4px 12px', marginRight: '5px' }}>
                                                 {tech}
                                             </span>
                                         ))}
                                     </div>
                                 )}
-                                <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
-                                    {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Live Demo</a>}
-                                    {project.githubLink && <a href={project.githubLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>GitHub Repo</a>}
+                                <div style={{ marginTop: '20px', display: 'flex', gap: '15px' }}>
+                                    {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 'bold', textDecoration: 'none' }}>Live Demo</a>}
+                                    {project.githubLink && <a href={project.githubLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>GitHub</a>}
                                 </div>
                             </div>
                         ))}
@@ -213,30 +248,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                 )}
             </div>
 
-            {/* Education Section */}
-            <div className="preview-section">
-                <h2 className="section-title">Education</h2>
-                {data.education && data.education.length > 0 ? (
-                    <div className="education-list">
-                        {data.education.map((edu, index) => (
-                            <div key={index} className="education-card">
-                                <h3 style={{ fontSize: '1.2rem', marginBottom: '4px', color: 'var(--text-main)' }}>
-                                    {edu.degree}
-                                </h3>
-                                <p style={{ color: 'var(--primary)', fontWeight: '600', marginBottom: '4px' }}>
-                                    {edu.institution}
-                                </p>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                                    {edu.year && <span>Year: {edu.year}</span>}
-                                    {edu.grade && <span>Grade: {edu.grade}</span>}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className="empty-state">No education details added yet</p>
-                )}
-            </div>
+
         </div>
     );
 }

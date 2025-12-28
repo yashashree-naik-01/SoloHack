@@ -31,6 +31,18 @@ function PortfolioForm() {
         }
     };
 
+    // Achievement Image Upload Handler
+    const handleAchievementImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setAchievementImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     // 2. Skills
     const [skills, setSkills] = useState('');
 
@@ -54,12 +66,13 @@ function PortfolioForm() {
     const [projectRepo, setProjectRepo] = useState('');
     const [projects, setProjects] = useState([]);
 
-    // 5. Education
-    const [institution, setInstitution] = useState('');
-    const [degree, setDegree] = useState('');
-    const [year, setYear] = useState('');
-    const [grade, setGrade] = useState('');
-    const [education, setEducation] = useState([]);
+    // 5. Education REMOVED
+
+    // 5. Achievements
+    const [achievementTitle, setAchievementTitle] = useState('');
+    const [achievementImage, setAchievementImage] = useState('');
+    const [achievementLink, setAchievementLink] = useState('');
+    const [achievements, setAchievements] = useState([]);
 
     // 6. Social Links
     const [githubLink, setGithubLink] = useState('');
@@ -91,9 +104,10 @@ function PortfolioForm() {
                         setDob(p.dob || '');
                         setSkills((p.skills || []).join(', '));
                         setProjects(p.projects || []);
-                        setEducation(p.education || []);
+                        // Education removed
                         setExperienceType(p.experienceType || 'fresher');
                         setExperiences(p.experiences || []);
+                        setAchievements(p.achievements || []); // Added
                         setInternships(p.internships || []);
                         if (p.social) {
                             setGithubLink(p.social.github || '');
@@ -151,6 +165,19 @@ function PortfolioForm() {
             setInternCompany(''); setInternRole(''); setInternDuration('');
         }
     };
+
+    const addAchievement = () => {
+        if (achievementTitle) {
+            setAchievements([...achievements, {
+                title: achievementTitle,
+                image: achievementImage,
+                link: achievementLink
+            }]);
+            setAchievementTitle('');
+            setAchievementImage('');
+            setAchievementLink('');
+        }
+    };
     const addProject = () => {
         if (projectTitle && projectDescription) {
             setProjects([...projects, {
@@ -163,19 +190,12 @@ function PortfolioForm() {
             setProjectTitle(''); setProjectDescription(''); setProjectTech(''); setProjectLink(''); setProjectRepo('');
         }
     };
-    const addEducation = () => {
-        if (institution && degree) {
-            setEducation([...education, { institution, degree, year, grade }]);
-            setInstitution(''); setDegree(''); setYear(''); setGrade('');
-        }
-    };
-
     const handleSubmit = async () => {
         const portfolioData = {
             username, fullName, profilePicture, about, contact, email, dob,
             skills: skills.split(',').map(s => s.trim()).filter(s => s),
-            experienceType, experiences, internships,
-            projects, education,
+            experienceType, experiences, internships, achievements,
+            projects, // Education Removed
             social: { github: githubLink, linkedin: linkedinLink }
         };
 
@@ -381,38 +401,34 @@ function PortfolioForm() {
                     </div>
                 )}
 
-                {/* STEP 5: EDUCATION */}
+                {/* STEP 5: ACHIEVEMENTS */}
                 {currentStep === 5 && (
                     <div className="level-section">
-                        <div className="section-header"><h3>5. Education</h3></div>
+                        <div className="section-header"><h3>5. Achievements</h3></div>
                         <div className="glass" style={{ padding: '20px', borderRadius: '15px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
-                                <div>
-                                    <label className="input-label">Institution Name</label>
-                                    <input type="text" placeholder="e.g. Harvard University" value={institution} onChange={(e) => setInstitution(e.target.value)} className="form-group-input" />
-                                </div>
-                                <div>
-                                    <label className="input-label">Degree / Certificate</label>
-                                    <input type="text" placeholder="e.g. B.Tech Computer Science" value={degree} onChange={(e) => setDegree(e.target.value)} className="form-group-input" />
-                                </div>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Achievement Title (Required)</label>
+                                <input type="text" placeholder="e.g. Hackathon Winner" value={achievementTitle} onChange={(e) => setAchievementTitle(e.target.value)} className="form-group-input" />
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
-                                <div>
-                                    <label className="input-label">Year of Completion</label>
-                                    <input type="text" placeholder="e.g. 2024" value={year} onChange={(e) => setYear(e.target.value)} className="form-group-input" />
-                                </div>
-                                <div>
-                                    <label className="input-label">Grade / CGPA</label>
-                                    <input type="text" placeholder="e.g. 9.0" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-group-input" />
-                                </div>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Certificate / Photo</label>
+                                <input type="file" accept="image/*" onChange={handleAchievementImageUpload} className="form-group-input" />
+                                {achievementImage && <img src={achievementImage} alt="Preview" style={{ width: '80px', height: '80px', borderRadius: '8px', marginTop: '10px', objectFit: 'cover' }} />}
                             </div>
-                            <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addEducation}>+ Add Education</button>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Link (Optional)</label>
+                                <input type="text" placeholder="https://..." value={achievementLink} onChange={(e) => setAchievementLink(e.target.value)} className="form-group-input" />
+                            </div>
+                            <button className="btn-secondary card-button" style={{ width: '100%' }} onClick={addAchievement}>+ Add Achievement</button>
 
                             <div className="added-items-list" style={{ marginTop: '20px' }}>
-                                {education.map((edu, i) => (
-                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
-                                        <strong>{edu.degree}</strong> <span style={{ color: 'var(--text-secondary)' }}>@ {edu.institution}</span>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>Year: {edu.year} • Grade: {edu.grade}</div>
+                                {achievements.map((ach, i) => (
+                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        {ach.image && <img src={ach.image} style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />}
+                                        <div style={{ flex: 1 }}>
+                                            <strong>{ach.title}</strong>
+                                            {ach.link && <a href={ach.link} target="_blank" rel="noopener noreferrer" style={{ display: 'block', fontSize: '0.8rem', color: 'var(--primary)' }}>View Link</a>}
+                                        </div>
                                     </div>
                                 ))}
                             </div>
