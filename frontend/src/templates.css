@@ -1,464 +1,499 @@
 /* =========================================================
-   PREMIUM PORTFOLIO THEMES - REDESIGNED
-   Concept: Distinct Cards, Generous Spacing, "Portfolio" not "Resume"
+   MODERN FULL-WIDTH PORTFOLIO STYLES
+   Structure: Section (100% width) > .content-container (Max Width)
 ========================================================= */
 
-/* Shared Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Oswald:wght@500;700&family=Outfit:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* Global Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* GLOBAL RESET & BASICS */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.preview-container {
-    animation: fadeInUp 0.8s ease-out;
+body,
+html {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    /* Increase Base Spacing for all templates */
-    padding-bottom: 100px;
+    overflow-x: hidden;
+    font-size: 16px;
 }
 
-/* =========================================================
-   1. ETHEREAL CLEAN (Minimal)
-   Style: Apple-esque, Excessive Whitespace, Soft Shadows
-========================================================= */
-.template-minimal {
-    --bg-page: #FAFAFA;
-    --bg-card: #FFFFFF;
-    --text-main: #18181B;
-    --text-muted: #71717A;
-    --accent: #2563EB;
-    /* Soft Blue */
-    --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
-    --border-radius: 20px;
+.portfolio-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
 
-    background-color: var(--bg-page) !important;
-    color: var(--text-main) !important;
-    font-family: 'Inter', sans-serif !important;
-    max-width: 1100px;
-    margin: 0 auto !important;
-    padding: 100px 40px !important;
+/* Common Container for Content */
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
     position: relative;
 }
 
-/* Header - Centered & Spacious */
-.template-minimal .preview-header {
+/* Recruiter Bar */
+.recruiter-bar-wrapper {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    /* Let clicks pass through around it */
+}
+
+.recruiter-controls {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 10px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.view-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b5563;
+    font-family: 'Inter', sans-serif;
+}
+
+.role-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.role-btn {
+    border: none;
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.2s;
+}
+
+.role-btn:hover {
+    background: #f3f4f6;
+    color: #111;
+}
+
+.role-btn.active {
+    background: #2563eb;
+    color: white;
+}
+
+.role-hint {
+    pointer-events: auto;
+    margin-top: 8px;
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.1);
+}
+
+/* =========================================================
+   THEME 1: MINIMAL (Modern Personal Website)
+   - Full height hero
+   - Airy sections
+   - Clean Typography (Inter)
+========================================================= */
+.template-minimal {
+    font-family: 'Inter', sans-serif;
+    color: #18181b;
+    background: #fafafa;
+}
+
+/* Minimal Hero */
+.template-minimal .section-hero {
+    min-height: 90vh;
+    /* Big impact */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin-bottom: 120px;
-    /* Huge gap */
-    padding: 60px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #f4f4f5;
 }
 
-.template-minimal .preview-header img {
-    box-shadow: var(--shadow-card);
-    transition: transform 0.3s ease;
+.template-minimal .hero-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 32px;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
 }
 
-.template-minimal .preview-header img:hover {
-    transform: scale(1.05);
-}
-
-.template-minimal .preview-header h1 {
-    font-size: 5rem !important;
+.template-minimal .hero-name {
+    font-size: 4.5rem;
     font-weight: 800;
     letter-spacing: -0.04em;
-    margin-bottom: 24px !important;
-    color: var(--text-main);
-    line-height: 1;
+    margin: 0 0 16px 0;
+    color: #111;
+    line-height: 1.1;
 }
 
-.template-minimal .preview-header p {
+.template-minimal .hero-role {
     font-size: 1.5rem;
-    color: var(--text-muted) !important;
-    max-width: 700px;
-    margin: 0 auto;
+    color: #71717a;
     font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
 }
 
-/* Section Titles - Subtle & Small */
+.template-minimal .hero-links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.template-minimal .social-btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    background: #18181b;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+
+.template-minimal .social-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Minimal Sections */
+.template-minimal section {
+    padding: 100px 0;
+}
+
+.template-minimal .section-about {
+    background: #fafafa;
+}
+
+.template-minimal .section-skills {
+    background: #ffffff;
+}
+
+.template-minimal .section-projects {
+    background: #fafafa;
+}
+
+.template-minimal .section-experience {
+    background: #ffffff;
+}
+
 .template-minimal .section-title {
-    font-size: 0.9rem !important;
+    font-size: 1rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--text-muted) !important;
-    margin-bottom: 60px !important;
+    letter-spacing: 0.1em;
+    color: #a1a1aa;
+    margin-bottom: 60px;
     text-align: center;
     font-weight: 600;
-    opacity: 0.8;
 }
 
-/* GRID LAYOUTS FOR CARDS */
-.template-minimal .projects-list,
-.template-minimal .education-list,
-/* kept for legacy class support */
-.template-minimal .achievements-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* Wide Cards */
-    gap: 40px;
-    /* Big Gaps */
+/* Minimal Content Styling */
+.template-minimal .about-text {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    text-align: center;
+    color: #3f3f46;
 }
 
-/* Card Styling - Clean White Box */
-.template-minimal .project-card,
-.template-minimal .experience-card,
-.template-minimal .added-item-card {
-    /* Fallback */
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
-    padding: 40px;
-    box-shadow: var(--shadow-card);
-    border: 1px solid rgba(0, 0, 0, 0.02);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.template-minimal .project-card:hover,
-.template-minimal .experience-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px -5px rgba(37, 99, 235, 0.1);
-    /* Blue glow */
-}
-
-.template-minimal .project-card h3,
-.template-minimal .experience-card h3 {
-    font-size: 1.5rem !important;
-    font-weight: 600;
-    margin-bottom: 15px !important;
-    color: var(--text-main);
-}
-
-.template-minimal .project-card p,
-.template-minimal .experience-card p {
-    color: var(--text-muted);
-    line-height: 1.8;
-    font-size: 1rem;
-}
-
-/* Skills - Clean Pills */
 .template-minimal .skills-grid {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 15px;
+    justify-content: center;
+    gap: 12px;
     max-width: 800px;
     margin: 0 auto;
 }
 
 .template-minimal .skill-tag {
-    background: white;
-    border: 1px solid #E4E4E7;
-    padding: 12px 24px;
+    background: #f4f4f5;
+    padding: 10px 20px;
     border-radius: 100px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-main);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-    transition: 0.2s;
+    font-size: 0.95rem;
+    color: #3f3f46;
 }
 
-.template-minimal .skill-tag:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
+.template-minimal .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 40px;
 }
 
+.template-minimal .project-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    border: 1px solid #f4f4f5;
+}
+
+.template-minimal .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.template-minimal .project-img-wrapper img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.template-minimal .project-content {
+    padding: 32px;
+}
 
 /* =========================================================
-   2. MIDNIGHT CYBER (Developer)
-   Style: Dark Mode, Terminal, Tech-Heavy, Contrasting Cards
+   THEME 2: DEVELOPER (Dark Tech / Terminal)
+   - Monospace accents
+   - Dark Mode
+   - Grid lines background
 ========================================================= */
 .template-developer {
-    --bg-deep: #0B0E14;
-    --bg-card: #151921;
-    --accent-neon: #00E5FF;
+    font-family: 'Inter', sans-serif;
+    background: #09090b;
+    color: #e4e4e7;
+}
+
+.template-developer .recruiter-controls {
+    background: rgba(24, 24, 27, 0.9);
+    border: 1px solid #27272a;
+}
+
+.template-developer .view-label {
+    color: #a1a1aa;
+}
+
+.template-developer .role-btn.active {
+    background: #06b6d4;
     /* Cyan */
-    --accent-purple: #9D4EDD;
-    --text-white: #F8FAFC;
-    --text-code: #94A3B8;
-    --border-color: rgba(255, 255, 255, 0.08);
-
-    background-color: var(--bg-deep) !important;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    color: var(--text-white) !important;
-    font-family: 'JetBrains Mono', monospace !important;
-    max-width: 1200px;
-    /* Wider */
-    margin: 0 auto !important;
-    padding: 80px 40px !important;
+    color: black;
 }
 
-/* Header - Side Alignment */
-.template-developer .preview-header {
+/* Dev Hero */
+.template-developer .section-hero {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border-left: 2px solid var(--accent-neon);
-    padding-left: 40px;
-    margin-bottom: 100px;
+    align-items: center;
+    background: #09090b;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    border-bottom: 1px solid #27272a;
 }
 
-.template-developer .preview-header h1 {
-    font-size: 4rem !important;
-    background: linear-gradient(to right, #fff, #94a3b8);
+.template-developer .hero-content {
+    max-width: 800px;
+}
+
+.template-developer .hero-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 4rem;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 20px !important;
+    margin-bottom: 24px;
 }
 
-.template-developer .preview-header p {
-    color: var(--accent-neon) !important;
-    font-size: 1.25rem;
-    opacity: 0.9;
+.template-developer .hero-role {
+    font-size: 1.5rem;
+    color: #06b6d4;
+    /* Cyan accent */
+    font-family: 'JetBrains Mono', monospace;
 }
 
-/* Section Titles - Terminal Style */
+.template-developer .hero-role::before {
+    content: '> ';
+}
+
+.template-developer .social-btn {
+    background: transparent;
+    border: 1px solid #27272a;
+    color: #e4e4e7;
+    padding: 10px 24px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.template-developer .social-btn:hover {
+    border-color: #06b6d4;
+    color: #06b6d4;
+}
+
+/* Dev Sections */
+.template-developer section {
+    padding: 120px 0;
+    border-bottom: 1px solid #18181b;
+}
+
 .template-developer .section-title {
-    color: var(--accent-purple) !important;
-    font-size: 1.5rem !important;
-    margin-bottom: 50px !important;
-    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: #06b6d4;
+    font-size: 1.5rem;
+    margin-bottom: 60px;
 }
 
 .template-developer .section-title::before {
-    content: '~/ ';
-    color: var(--text-code);
+    content: '# ';
 }
 
-/* Cards - Dark Blocks with Glow */
-.template-developer .project-card,
-.template-developer .experience-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    border-radius: 8px;
-    /* Sharper corners */
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.template-developer .project-card::before,
-.template-developer .experience-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-neon), var(--accent-purple));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.template-developer .project-card:hover,
-.template-developer .experience-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.15);
-    border-color: var(--accent-neon);
-}
-
-.template-developer .project-card:hover::before,
-.template-developer .experience-card:hover::before {
-    opacity: 1;
-}
-
-.template-developer .project-card h3,
-.template-developer .experience-card h3 {
-    color: var(--text-white) !important;
-    font-size: 1.3rem !important;
-    margin-bottom: 10px !important;
-}
-
-.template-developer .project-card p,
-.template-developer .experience-card p {
-    color: var(--text-code) !important;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* Grids */
-.template-developer .projects-list,
-.template-developer .achievements-list {
+/* Dev Projects */
+.template-developer .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* Strict 2 column */
-    gap: 30px;
+    /* Strict 2 col */
+    gap: 40px;
 }
 
-/* Tags */
-.template-developer .skill-tag,
-.template-developer .tech-tag {
-    background: rgba(0, 229, 255, 0.05);
-    color: var(--accent-neon);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    padding: 6px 14px;
-    font-size: 0.85rem;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    display: inline-block;
+.template-developer .project-card {
+    background: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.template-developer .project-card:hover {
+    border-color: #06b6d4;
+    transform: translateY(-5px);
+}
+
+.template-developer .tech-pill {
+    background: rgba(6, 182, 212, 0.1);
+    color: #06b6d4;
+    padding: 4px 12px;
     border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
 }
-
 
 /* =========================================================
-   3. VIBRANT POP (Creative)
-   Style: Brutalism, High Contrast, Bold Colors, Offset Shadows
+   THEME 3: CREATIVE (Bold / Brutalist)
+   - Large Typography
+   - Asymmetric layouts
+   - High contrast
 ========================================================= */
 .template-creative {
-    --bg-pop: #Fdfbf7;
-    --card-bg: #FFFFFF;
-    --pop-black: #111;
-    --pop-pink: #FF6B6B;
-    --pop-blue: #4ECDC4;
-    --pop-yellow: #FFE66D;
-
-    background-color: var(--bg-pop) !important;
-    color: var(--pop-black) !important;
-    font-family: 'Outfit', sans-serif !important;
-    max-width: 1100px;
-    margin: 0 auto !important;
-    padding: 80px 50px !important;
+    font-family: 'Outfit', sans-serif;
+    background: #fff;
+    color: #000;
 }
 
-/* Header - Bold Sticker */
-.template-creative .preview-header {
-    background: var(--pop-yellow);
-    padding: 60px;
-    border: 4px solid var(--pop-black);
-    box-shadow: 12px 12px 0px var(--pop-black);
-    margin-bottom: 100px;
-    transform: rotate(-1deg);
-    text-align: center;
+/* Creative Hero */
+.template-creative .section-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fdf6e3;
+    /* Off-white / cream */
+    border-bottom: 4px solid #000;
 }
 
-.template-creative .preview-header h1 {
+.template-creative .hero-name {
     font-family: 'Oswald', sans-serif;
+    font-size: 8rem;
     text-transform: uppercase;
-    font-size: 4.5rem !important;
     line-height: 0.9;
-    margin-bottom: 15px !important;
-    color: var(--pop-black);
+    color: #000;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 0px #ff6b6b;
 }
 
-.template-creative .preview-header p {
-    font-weight: 700;
-    font-size: 1.4rem;
-    background: var(--pop-pink);
-    color: white !important;
+.template-creative .hero-role {
+    font-size: 2rem;
+    font-weight: 900;
+    background: #000;
+    color: #fff;
     display: inline-block;
-    padding: 5px 20px;
-    transform: rotate(2deg) translateY(10px);
-    border: 3px solid var(--pop-black);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px 30px;
+    transform: rotate(-2deg);
 }
 
-/* Section Title - Huge & Graphic */
+/* Creative Sections */
+.template-creative section {
+    padding: 120px 0;
+}
+
+.template-creative .section-projects {
+    background: #ff6b6b;
+    /* Bold red bg */
+}
+
 .template-creative .section-title {
     font-family: 'Oswald', sans-serif;
-    font-size: 3rem !important;
+    font-size: 4rem;
     text-transform: uppercase;
-    color: var(--pop-black);
-    border-bottom: 6px solid var(--pop-blue);
+    color: #000;
+    margin-bottom: 80px;
+    border-bottom: 8px solid #000;
     display: inline-block;
-    margin-bottom: 60px !important;
-    transform: rotate(0.5deg);
 }
 
-/* Cards - Pop Art Style */
-.template-creative .project-card,
-.template-creative .experience-card {
-    background: var(--card-bg);
-    border: 3px solid var(--pop-black);
-    box-shadow: 8px 8px 0px var(--pop-black);
-    padding: 30px;
-    border-radius: 12px;
-    transition: all 0.2s;
-    height: 100%;
-}
-
-.template-creative .project-card:hover,
-.template-creative .experience-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 14px 14px 0px var(--pop-black);
-    background: #fffafa;
-}
-
-.template-creative .project-card h3,
-.template-creative .experience-card h3 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2rem !important;
-    background: var(--pop-blue);
-    color: var(--pop-black) !important;
-    display: inline-block;
-    padding: 2px 12px;
-    margin-bottom: 15px !important;
-    border: 2px solid var(--pop-black);
-}
-
-.template-creative .projects-list {
+.template-creative .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 50px;
-    /* Huge gap for pop cards */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 60px;
 }
 
-/* Skills - Scattered Stickers */
-.template-creative .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.template-creative .skill-tag {
+.template-creative .project-card {
     background: white;
-    border: 3px solid var(--pop-black);
-    padding: 10px 20px;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 1.1rem;
-    box-shadow: 4px 4px 0 var(--pop-black);
+    border: 4px solid #000;
+    box-shadow: 12px 12px 0px #000;
     transition: 0.2s;
 }
 
-.template-creative .skill-tag:hover {
-    background: var(--pop-black);
-    color: var(--pop-yellow);
-    transform: rotate(3deg) scale(1.1);
+.template-creative .project-card:hover {
+    transform: translate(-8px, -8px);
+    box-shadow: 20px 20px 0px #000;
 }
 
-/* MEDIA QUERIES */
+.template-creative .project-content {
+    padding: 40px;
+}
+
+/* RESPONSIVE COMMON */
 @media (max-width: 768px) {
-    .preview-container {
-        padding: 40px 20px !important;
+    .template-minimal .hero-name {
+        font-size: 3rem;
     }
 
-    .template-minimal .preview-header h1 {
-        font-size: 3rem !important;
+    .template-developer .hero-name {
+        font-size: 2.5rem;
     }
 
-    .template-developer .preview-header h1 {
-        font-size: 2.5rem !important;
+    .template-creative .hero-name {
+        font-size: 4rem;
     }
 
-    .template-creative .preview-header h1 {
-        font-size: 3rem !important;
+    .projects-grid {
+        grid-template-columns: 1fr !important;
     }
 
-    .template-minimal .projects-list,
-    .template-developer .projects-list,
-    .template-creative .projects-list {
-        grid-template-columns: 1fr;
-        /* Stack on mobile */
+    .section-hero {
+        min-height: auto;
+        padding: 100px 0;
     }
 }

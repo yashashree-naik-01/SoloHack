@@ -142,239 +142,196 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     }
 
     return (
-        <div className={`preview-container template-${template}`}>
+        <div className={`portfolio-wrapper template-${template}`}>
 
-            {/* --- RECRUITER VIEW CONTROLS --- */}
-            <div className="recruiter-controls" style={{
-                marginBottom: '40px',
-                background: 'var(--bg-card)',
-                padding: '15px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                textAlign: 'center',
-                border: '1px solid var(--border-color)'
-            }}>
-                <span style={{ fontWeight: '600', color: 'var(--text-muted)', marginRight: '15px', fontSize: '0.9rem' }}>
-                    👀 VIEW AS:
-                </span>
-                <div style={{ display: 'inline-flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    {['All', 'Frontend', 'Backend', 'Full Stack', 'UI/UX', 'Data'].map(role => (
-                        <button
-                            key={role}
-                            onClick={() => setSelectedRole(role)}
-                            style={{
-                                background: selectedRole === role ? 'var(--primary)' : 'transparent',
-                                color: selectedRole === role ? '#fff' : 'var(--text-secondary)',
-                                border: `1px solid ${selectedRole === role ? 'var(--primary)' : 'var(--border-color)'}`,
-                                padding: '6px 14px',
-                                borderRadius: '20px',
-                                cursor: 'pointer',
-                                fontSize: '0.85rem',
-                                fontWeight: '500',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            {role}
-                        </button>
-                    ))}
+            {/* --- RECRUITER VIEW CONTROLS (Sticky Top) --- */}
+            <div className="recruiter-bar-wrapper">
+                <div className="recruiter-controls">
+                    <span className="view-label">👀 View as Recruiter:</span>
+                    <div className="role-buttons">
+                        {['All', 'Frontend', 'Backend', 'Full Stack', 'UI/UX', 'Data'].map(role => (
+                            <button
+                                key={role}
+                                onClick={() => setSelectedRole(role)}
+                                className={selectedRole === role ? 'role-btn active' : 'role-btn'}
+                            >
+                                {role}
+                            </button>
+                        ))}
+                    </div>
                 </div>
                 {selectedRole !== 'All' && (
-                    <div style={{ marginTop: '10px', fontSize: '0.85rem', color: 'var(--accent)' }}>
+                    <div className="role-hint">
                         ✨ Highlighting content relevant for <strong>{selectedRole}</strong> roles
                     </div>
                 )}
             </div>
 
-            <div className="preview-header">
-                {processedData.profilePicture && (
-                    <img
-                        src={processedData.profilePicture}
-                        alt="Profile"
-                        style={{
-                            width: '150px',
-                            height: '150px',
-                            borderRadius: '12px',
-                            objectFit: 'cover',
-                            marginBottom: '20px',
-                            border: '4px solid var(--primary)'
-                        }}
-                    />
-                )}
-                <h1 style={{ fontSize: '2.5rem', marginBottom: '8px', color: 'var(--text-main)' }}>
-                    {processedData.fullName || processedData.username || 'Student Portfolio'}
-                </h1>
-
-
-                {/* Contact Info Row */}
-                <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
-                    {processedData.email && <span>📧 {processedData.email}</span>}
-                    {processedData.contact && <span>📱 {processedData.contact}</span>}
-                    {processedData.dob && <span>🎂 {new Date(processedData.dob).toLocaleDateString()}</span>}
-                </div>
-
-                {/* Social Links Row */}
-                {processedData.social && (processedData.social.github || processedData.social.linkedin) && (
-                    <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '15px' }}>
-                        {processedData.social.github && (
-                            <a href={processedData.social.github} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-                                GitHub
-                            </a>
+            {/* HERO SECTION */}
+            <section className="section-hero">
+                <div className="content-container">
+                    <div className="hero-content">
+                        {processedData.profilePicture && (
+                            <img
+                                src={processedData.profilePicture}
+                                alt="Profile"
+                                className="hero-img"
+                            />
                         )}
-                        {processedData.social.linkedin && (
-                            <a href={processedData.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-                                LinkedIn
-                            </a>
-                        )}
+                        <h1 className="hero-name">
+                            {processedData.fullName || processedData.username || 'Student Name'}
+                        </h1>
+                        <p className="hero-role">
+                            {processedData.about ? processedData.about.split('.')[0] + '.' : 'Aspiring Professional'}
+                        </p>
+
+                        <div className="hero-links">
+                            {processedData.email && <span className="icon-link">📧 {processedData.email}</span>}
+                            {processedData.social?.github && (
+                                <a href={processedData.social.github} target="_blank" rel="noreferrer" className="social-btn">GitHub</a>
+                            )}
+                            {processedData.social?.linkedin && (
+                                <a href={processedData.social.linkedin} target="_blank" rel="noreferrer" className="social-btn">LinkedIn</a>
+                            )}
+                        </div>
                     </div>
-                )}
-            </div>
+                </div>
+            </section>
 
-            {/* About Section */}
-            <div className="preview-section">
-                <h2 className="section-title">About Me</h2>
-                {processedData.about ? (
-                    <p className="section-content">{processedData.about}</p>
-                ) : (
-                    <p className="empty-state">No about section added yet</p>
-                )}
-            </div>
+            {/* ABOUT SECTION */}
+            {processedData.about && (
+                <section className="section-about">
+                    <div className="content-container">
+                        <h2 className="section-title">About Me</h2>
+                        <div className="about-text">
+                            <p>{processedData.about}</p>
+                        </div>
+                        <div className="personal-details">
+                            {processedData.contact && <span><strong>Phone:</strong> {processedData.contact}</span>}
+                            {processedData.dob && <span><strong>Born:</strong> {new Date(processedData.dob).toLocaleDateString()}</span>}
+                        </div>
+                    </div>
+                </section>
+            )}
 
-            {/* Experience / Internships Section */}
+            {/* SKILLS SECTION (Moved up for better flow) */}
+            {processedData.skills && processedData.skills.length > 0 && (
+                <section className="section-skills">
+                    <div className="content-container">
+                        <h2 className="section-title">Technical Skills</h2>
+                        <div className="skills-grid">
+                            {processedData.skills.map((skill, index) => (
+                                <div key={index} className="skill-tag" style={{
+                                    opacity: selectedRole === 'All' ? 1 : (getRelevance({ title: skill }, selectedRole).score > 0 ? 1 : 0.4),
+                                    order: selectedRole === 'All' ? 0 : (getRelevance({ title: skill }, selectedRole).score > 0 ? -1 : 1)
+                                }}>
+                                    {skill}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* EXPERIENCE SECTION */}
             {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
-                <div className="preview-section">
-                    <h2 className="section-title">
-                        {processedData.experienceType === 'experienced' ? 'Work Experience' : 'Internships'}
-                    </h2>
-                    <div className="experience-list">
-                        {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, i) => (
-                            <div key={i} className="experience-card">
-                                <h3>{exp.role}</h3>
-                                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{exp.company}</p>
-                                <p>{exp.duration}</p>
-                            </div>
-                        ))}
+                <section className="section-experience">
+                    <div className="content-container">
+                        <h2 className="section-title">
+                            {processedData.experienceType === 'experienced' ? 'Experience' : 'Internships'}
+                        </h2>
+                        <div className="experience-grid">
+                            {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, i) => (
+                                <div key={i} className="experience-card">
+                                    <div className="exp-header">
+                                        <h3>{exp.role}</h3>
+                                        <span className="exp-company">{exp.company}</span>
+                                    </div>
+                                    <p className="exp-duration">{exp.duration}</p>
+                                </div>
+                            ))}
 
-                        {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, i) => (
-                            <div key={i} className="experience-card">
-                                <h3>{int.role}</h3>
-                                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{int.company}</p>
-                                <p>{int.duration}</p>
-                            </div>
-                        ))}
+                            {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, i) => (
+                                <div key={i} className="experience-card">
+                                    <div className="exp-header">
+                                        <h3>{int.role}</h3>
+                                        <span className="exp-company">{int.company}</span>
+                                    </div>
+                                    <p className="exp-duration">{int.duration}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </section>
             )}
 
-            {/* Achievements Section */}
-            {processedData.achievements && processedData.achievements.length > 0 && (
-                <div className="preview-section">
-                    <h2 className="section-title">Achievements</h2>
-                    <div className="achievements-list">
-                        {processedData.achievements.map((ach, index) => (
-                            <div key={index} className="experience-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                                {ach.image && (
-                                    <img
-                                        src={ach.image}
-                                        alt={ach.title}
-                                        style={{
-                                            width: '80px',
-                                            height: '80px',
-                                            borderRadius: '12px',
-                                            objectFit: 'cover'
-                                        }}
-                                    />
-                                )}
-                                <div>
-                                    <h3 style={{ marginBottom: '5px' }}>{ach.title}</h3>
-                                    {ach.link && (
-                                        <a
-                                            href={ach.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            style={{ color: 'var(--accent)', fontWeight: '600', textDecoration: 'none' }}
-                                        >
-                                            View Certificate →
-                                        </a>
+            {/* PROJECTS SECTION */}
+            {processedData.projects && processedData.projects.length > 0 && (
+                <section className="section-projects">
+                    <div className="content-container">
+                        <h2 className="section-title">Featured Projects</h2>
+                        <div className="projects-grid">
+                            {processedData.projects.map((project, index) => (
+                                <div key={index} className="project-card" style={{
+                                    opacity: selectedRole === 'All' || project._score > 0 ? 1 : 0.5,
+                                    transform: selectedRole !== 'All' && project._score === 0 ? 'scale(0.98)' : 'none'
+                                }}>
+                                    {project.image && (
+                                        <div className="project-img-wrapper">
+                                            <img src={project.image} alt={project.title} />
+                                        </div>
                                     )}
+                                    <div className="project-content">
+                                        <h3>{project.title}</h3>
+                                        {selectedRole !== 'All' && project._relevanceText && (
+                                            <div className="relevance-badge">
+                                                💡 {project._relevanceText}
+                                            </div>
+                                        )}
+                                        <p>{project.description}</p>
+                                        <div className="tech-stack">
+                                            {project.technologies?.map((tech, idx) => (
+                                                <span key={idx} className="tech-pill">{tech}</span>
+                                            ))}
+                                        </div>
+                                        <div className="project-links">
+                                            {project.link && <a href={project.link} target="_blank" rel="noreferrer">Live Demo →</a>}
+                                            {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer">GitHub ↗</a>}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </section>
             )}
 
-            {/* Skills Section */}
-            <div className="preview-section">
-                <h2 className="section-title">Skills</h2>
-                {processedData.skills && processedData.skills.length > 0 ? (
-                    <div className="skills-grid">
-                        {processedData.skills.map((skill, index) => (
-                            <div key={index} className="skill-tag" style={{
-                                opacity: selectedRole === 'All' ? 1 : (getRelevance({ title: skill }, selectedRole).score > 0 ? 1 : 0.4),
-                                order: selectedRole === 'All' ? 0 : (getRelevance({ title: skill }, selectedRole).score > 0 ? -1 : 1)
-                            }}>
-                                {skill}
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className="empty-state">No skills added yet</p>
-                )}
-            </div>
-
-            {/* Projects Section */}
-            <div className="preview-section">
-                <h2 className="section-title">Projects</h2>
-                {processedData.projects && processedData.projects.length > 0 ? (
-                    <div className="projects-list">
-                        {processedData.projects.map((project, index) => (
-                            <div key={index} className="project-card" style={{
-                                opacity: selectedRole === 'All' || project._score > 0 ? 1 : 0.5,
-                                transform: selectedRole !== 'All' && project._score === 0 ? 'scale(0.98)' : 'none'
-                            }}>
-                                {project.image && (
-                                    <img
-                                        src={project.image}
-                                        alt="Project"
-                                        style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px' }}
-                                    />
-                                )}
-                                <h3>{project.title}</h3>
-                                {selectedRole !== 'All' && project._relevanceText && (
-                                    <div style={{
-                                        marginBottom: '10px',
-                                        fontSize: '0.85rem',
-                                        color: '#059669',
-                                        background: '#ecfdf5',
-                                        padding: '4px 8px',
-                                        borderRadius: '4px',
-                                        display: 'inline-block'
-                                    }}>
-                                        💡 {project._relevanceText}
+            {/* ACHIEVEMENTS SECTION */}
+            {processedData.achievements && processedData.achievements.length > 0 && (
+                <section className="section-achievements">
+                    <div className="content-container">
+                        <h2 className="section-title">Achievements</h2>
+                        <div className="achievements-grid">
+                            {processedData.achievements.map((ach, index) => (
+                                <div key={index} className="achievement-card">
+                                    {ach.image && <img src={ach.image} alt={ach.title} />}
+                                    <div className="ach-info">
+                                        <h4>{ach.title}</h4>
+                                        {ach.link && <a href={ach.link} target="_blank" rel="noreferrer">View Certificate</a>}
                                     </div>
-                                )}
-                                <p>{project.description}</p>
-                                {project.technologies && project.technologies.length > 0 && (
-                                    <div style={{ marginTop: '15px' }}>
-                                        {project.technologies.map((tech, idx) => (
-                                            <span key={idx} className="skill-tag" style={{ fontSize: '0.8rem', padding: '4px 12px', marginRight: '5px' }}>
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-                                <div style={{ marginTop: '20px', display: 'flex', gap: '15px' }}>
-                                    {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 'bold', textDecoration: 'none' }}>Live Demo</a>}
-                                    {project.githubLink && <a href={project.githubLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>GitHub</a>}
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                ) : (
-                    <p className="empty-state">No projects added yet</p>
-                )}
-            </div>
+                </section>
+            )}
 
+            {/* FOOTER */}
+            <footer className="portfolio-footer">
+                <div className="content-container">
+                    <p>© {new Date().getFullYear()} {processedData.fullName || processedData.username}. Built with SoloHack.</p>
+                </div>
+            </footer>
 
         </div>
     );
