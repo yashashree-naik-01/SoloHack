@@ -186,20 +186,6 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     return (
         <div className={`live-preview-wrapper template-${safeTemplate}`}>
 
-            {/* STICKY NAVIGATION BAR */}
-            <nav className="portfolio-nav">
-                <div className="nav-links">
-                    <button onClick={() => scrollToSection('about-section')} className="nav-link">About</button>
-                    <button onClick={() => scrollToSection('skills-section')} className="nav-link">Skills</button>
-                    <button onClick={() => scrollToSection('projects-section')} className="nav-link">Projects</button>
-                    <button onClick={() => scrollToSection('experience-section')} className="nav-link">Experience</button>
-                    <button onClick={() => scrollToSection('contact-section')} className="nav-link">Contact</button>
-                    {processedData?.resume && (
-                        <button onClick={downloadResume} className="nav-link resume-btn">📄 Resume</button>
-                    )}
-                </div>
-            </nav>
-
             {/* Recruiters View Control Bar */}
             <div className="recruiter-view-controls">
                 <span>👁️ Recruiter View:</span>
@@ -219,6 +205,20 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     </button>
                 ))}
             </div>
+
+            {/* STICKY NAVIGATION BAR */}
+            <nav className="portfolio-nav">
+                <div className="nav-links">
+                    <button onClick={() => scrollToSection('about-section')} className="nav-link">About</button>
+                    <button onClick={() => scrollToSection('skills-section')} className="nav-link">Skills</button>
+                    <button onClick={() => scrollToSection('projects-section')} className="nav-link">Projects</button>
+                    <button onClick={() => scrollToSection('experience-section')} className="nav-link">Experience</button>
+                    <button onClick={() => scrollToSection('contact-section')} className="nav-link">Contact</button>
+                    {processedData?.resume && (
+                        <button onClick={downloadResume} className="nav-link resume-btn">📄 Resume</button>
+                    )}
+                </div>
+            </nav>
 
             {/* HERO SECTION */}
             <section id="about-section" className="preview-section hero-section">
