@@ -403,47 +403,94 @@ body {
 }
 
 /* =========================================
-   TEMPLATE: DEVELOPER
+   TEMPLATE: DEVELOPER (Terminal / Matrix Theme)
    ========================================= */
 .template-developer {
-    --bg-page: #0f172a;
-    --card-bg: #1e293b;
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
-    --primary: #38bdf8;
-    --border-color: #334155;
+    --bg-page: #000000;
+    --card-bg: rgba(0, 20, 0, 0.8);
+    --text-main: #00ff41;
+    --text-muted: #008f11;
+    --primary: #00ff41;
+    --border-color: #003b00;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    letter-spacing: -0.5px;
 }
 
 .template-developer .recruiter-view-controls {
-    background: rgba(15, 23, 42, 0.9);
-    border-bottom-color: #334155;
-    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid var(--primary);
+    color: var(--primary);
 }
 
 .template-developer .role-btn {
-    background: #1e293b;
-    color: #cbd5e1;
-    border-color: #475569;
+    background: #000;
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.template-developer .role-btn.active {
+    background: var(--primary);
+    color: black;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
 }
 
 .template-developer .preview-section {
-    border-bottom: 1px dashed #334155;
+    border-bottom: 1px dashed var(--text-muted);
 }
 
 .template-developer .hero-photo {
-    border-color: var(--primary);
-    border-radius: 12px;
-    /* Slight square for dev */
+    border: 2px solid var(--primary);
+    border-radius: 0;
+    /* Strict square for terminal look */
+    filter: grayscale(100%) contrast(1.2) brightness(0.8);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
 }
 
 .template-developer .hero-name {
     color: var(--primary);
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+    position: relative;
+    display: inline-block;
 }
 
 .template-developer .hero-name::before {
     content: '> ';
-    color: #94a3b8;
+    color: var(--primary);
+    margin-right: 10px;
+}
+
+.template-developer .hero-name::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.template-developer .card-style {
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: none;
+    transition: all 0.2s;
+}
+
+.template-developer .card-style:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Developer Skills: Marquee */
@@ -452,9 +499,10 @@ body {
     white-space: nowrap;
     position: relative;
     padding: 2rem 0;
-    background: #1e293b;
-    /* Distinct track bg */
-    border-radius: 8px;
+    background: #050505;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
 }
 
 .template-developer .skills-marquee-track {
@@ -466,11 +514,13 @@ body {
     display: inline-block;
     padding: 0.5rem 2rem;
     margin: 0 1rem;
-    background: rgba(56, 189, 248, 0.1);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 4px;
+    background: #001100;
+    color: var(--primary);
+    border: 1px solid var(--text-muted);
+    border-radius: 0;
     font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
 }
 
 @keyframes scroll-left {
