@@ -146,8 +146,11 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
         );
     }
 
+    // Ensure template is lowercase for consistency
+    const safeTemplate = template ? template.toLowerCase() : 'minimal';
+
     return (
-        <div className={`live-preview-wrapper template-${template}`}>
+        <div className={`live-preview-wrapper template-${safeTemplate}`}>
 
             {/* Recruiters View Control Bar */}
             <div className="recruiter-view-controls">
@@ -176,13 +179,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         <img src={processedData.profilePicture} alt="Profile" className="hero-photo" />
                     )}
                     <div className="hero-text">
-                        {template === 'developer' && <div className="pill-badge">About</div>}
+                        {safeTemplate === 'developer' && <div className="pill-badge">About</div>}
                         <h1 className="hero-name">{processedData.fullName || 'Your Name'}</h1>
                         <p className="hero-title">{processedData.about || 'Bio goes here...'}</p>
 
 
                         {/* Developer Stats Grid */}
-                        {template === 'developer' && (
+                        {safeTemplate === 'developer' && (
                             <div className="dev-stats-grid">
                                 <div className="stat-item">
                                     <span className="stat-label">Months of Experience</span>
@@ -214,7 +217,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.skills.length > 0 || (processedData.tools && processedData.tools.length > 0) || (processedData.softSkills && processedData.softSkills.length > 0)) && (
                 <section className="preview-section skills-section">
                     <div className="content-container">
-                        {template === 'developer' ? (
+                        {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Skills</div></div>
                         ) : (
                             <h2>Skills & Expertise</h2>
@@ -224,9 +227,9 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         {processedData.skills.length > 0 && (
                             <div className="skill-category" style={{ marginBottom: '2rem' }}>
                                 {/* Hide subheaders for developer if using pill layout, or keep them small */}
-                                {template !== 'developer' && <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Technical Domains</h3>}
+                                {safeTemplate !== 'developer' && <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Technical Domains</h3>}
 
-                                {template === 'developer' ? (
+                                {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {[...processedData.skills].map((skill, index) => (
                                             <span key={index} className="skill-pill">{skill.name}</span>
@@ -250,13 +253,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         {/* 2. TOOLS & SOFTWARE */}
                         {processedData.tools && processedData.tools.length > 0 && (
                             <div className="skill-category" style={{ marginBottom: '2rem' }}>
-                                {template === 'developer' ? (
+                                {safeTemplate === 'developer' ? (
                                     <div className="pill-header-container" style={{ marginTop: '3rem' }}><div className="pill-header">Tools / Software</div></div>
                                 ) : (
                                     <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Tools & Software</h3>
                                 )}
 
-                                {template === 'developer' ? (
+                                {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {processedData.tools.map((tool, index) => (
                                             <span key={index} className="skill-pill">{tool}</span>
@@ -275,13 +278,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         {/* 3. SOFT SKILLS */}
                         {processedData.softSkills && processedData.softSkills.length > 0 && (
                             <div className="skill-category">
-                                {template === 'developer' ? (
+                                {safeTemplate === 'developer' ? (
                                     <div className="pill-header-container" style={{ marginTop: '3rem' }}><div className="pill-header">Soft Skills</div></div>
                                 ) : (
                                     <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.8 }}>Soft Skills</h3>
                                 )}
 
-                                {template === 'developer' ? (
+                                {safeTemplate === 'developer' ? (
                                     <div className="skills-pill-container">
                                         {processedData.softSkills.map((skill, index) => (
                                             <span key={index} className="skill-pill">{skill}</span>
@@ -306,12 +309,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.projects && processedData.projects.length > 0) && (
                 <section className="preview-section projects-section">
                     <div className="content-container">
-                        {template === 'developer' ? (
+                        {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Projects</div></div>
                         ) : (
                             <h2>Projects</h2>
                         )}
-                        {template === 'developer' && <h2 className="dev-section-title">My Latest Projects</h2>}
+                        {safeTemplate === 'developer' && <h2 className="dev-section-title">My Latest Projects</h2>}
 
                         <div className="projects-grid">
                             {processedData.projects.map((project, index) => (
@@ -348,12 +351,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.achievements && processedData.achievements.length > 0) && (
                 <section className="preview-section achievements-section">
                     <div className="content-container">
-                        {template === 'developer' ? (
+                        {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Achievements</div></div>
                         ) : (
                             <h2>Achievements</h2>
                         )}
-                        {template === 'developer' && <h2 className="dev-section-title">My Achievements</h2>}
+                        {safeTemplate === 'developer' && <h2 className="dev-section-title">My Achievements</h2>}
 
                         <div className="achievements-grid">
                             {processedData.achievements.map((ach, index) => (
@@ -379,12 +382,12 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
                 <section className="preview-section experience-section">
                     <div className="content-container">
-                        {template === 'developer' ? (
+                        {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Experiences</div></div>
                         ) : (
                             <h2>Experience</h2>
                         )}
-                        {template === 'developer' && <h2 className="dev-section-title">My Experiences</h2>}
+                        {safeTemplate === 'developer' && <h2 className="dev-section-title">My Experiences</h2>}
 
                         <div className="experience-list">
                             {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, index) => (
@@ -416,7 +419,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {(processedData.education && processedData.education.length > 0) && (
                 <section className="preview-section education-section">
                     <div className="content-container">
-                        {template === 'developer' ? (
+                        {safeTemplate === 'developer' ? (
                             <div className="pill-header-container"><div className="pill-header">Education</div></div>
                         ) : (
                             <h2>Education</h2>

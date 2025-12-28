@@ -20,7 +20,9 @@ const portfolioSchema = new mongoose.Schema({
     dob: { type: String, default: '' }, // New DOB field
 
     // 2. SKILLS
-    skills: { type: [String], default: [] }, // Array of skill names
+    skills: { type: [String], default: [] }, // Array of skill names - Technical
+    tools: { type: [String], default: [] }, // Array of tool names
+    softSkills: { type: [String], default: [] }, // Array of soft skills
 
     // 3. EXPERIENCE (New)
     experienceType: {
