@@ -5,6 +5,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedRole, setSelectedRole] = useState('All');
 
     // Fetch portfolio data if username is provided
     useEffect(() => {
@@ -34,6 +35,64 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             setLoading(false);
         }
     };
+
+    // ROLE DEFINITIONS & KEYWORD MATCHING
+    const ROLES = {
+        'Frontend': ['react', 'vue', 'angular', 'html', 'css', 'javascript', 'tailwind', 'bootstrap', 'sass', 'redux', 'frontend', 'ui', 'ux', 'web', 'design'],
+        'Backend': ['node', 'express', 'mongodb', 'sql', 'python', 'java', 'django', 'flask', 'api', 'database', 'server', 'aws', 'backend', 'postgres', 'docker'],
+        'Full Stack': ['react', 'node', 'express', 'mongodb', 'mern', 'mean', 'full stack', 'fullstack', 'javascript', 'typescript'],
+        'UI/UX': ['figma', 'adobe', 'design', 'ui', 'ux', 'css', 'wireframe', 'prototype', 'canva', 'creative'],
+        'Data': ['python', 'sql', 'pandas', 'numpy', 'data', 'analysis', 'machine learning', 'ai', 'statistics', 'tableau', 'power bi'],
+        'Internship': ['intern', 'internship', 'student', 'project', 'beginner', 'learning']
+    };
+
+    // Helper: Calculate Relevance Score
+    const getRelevance = (item, role) => {
+        if (role === 'All') return { score: 1, text: '' };
+
+        const keywords = ROLES[role];
+        const textToCheck = `${item.title || ''} ${item.description || ''} ${(item.technologies || []).join(' ')} ${item.role || ''} ${item.company || ''}`.toLowerCase();
+
+        const matches = keywords.filter(k => textToCheck.includes(k));
+        const score = matches.length;
+
+        let relevanceText = '';
+        if (score > 0) {
+            relevanceText = `Matches ${matches.slice(0, 3).join(', ')} relevant to ${role}`;
+        }
+
+        return { score, text: relevanceText };
+    };
+
+    // Derived Data: Sorted/Filtered
+    const getProcessedData = () => {
+        if (!data) return null;
+
+        // Clone data to avoid mutation
+        const processed = { ...data };
+
+        // 1. Sort Projects
+        if (processed.projects) {
+            processed.projects = processed.projects.map(p => {
+                const { score, text } = getRelevance(p, selectedRole);
+                return { ...p, _score: score, _relevanceText: text };
+            }).sort((a, b) => b._score - a._score);
+        }
+
+        // 2. Sort Skills
+        if (processed.skills) {
+            processed.skills = [...processed.skills].sort((a, b) => {
+                const scoreA = getRelevance({ title: a }, selectedRole).score;
+                const scoreB = getRelevance({ title: b }, selectedRole).score;
+                return scoreB - scoreA;
+            });
+        }
+
+        return processed;
+    };
+
+    const processedData = getProcessedData();
+
 
     if (loading) {
         return (
@@ -65,7 +124,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
         );
     }
 
-    if (!data) {
+    if (!processedData) {
         return (
             <div className="preview-container">
                 <div style={{
@@ -84,10 +143,52 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
 
     return (
         <div className={`preview-container template-${template}`}>
+
+            {/* --- RECRUITER VIEW CONTROLS --- */}
+            <div className="recruiter-controls" style={{
+                marginBottom: '40px',
+                background: 'var(--bg-card)',
+                padding: '15px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
+                textAlign: 'center',
+                border: '1px solid var(--border-color)'
+            }}>
+                <span style={{ fontWeight: '600', color: 'var(--text-muted)', marginRight: '15px', fontSize: '0.9rem' }}>
+                    👀 VIEW AS:
+                </span>
+                <div style={{ display: 'inline-flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {['All', 'Frontend', 'Backend', 'Full Stack', 'UI/UX', 'Data'].map(role => (
+                        <button
+                            key={role}
+                            onClick={() => setSelectedRole(role)}
+                            style={{
+                                background: selectedRole === role ? 'var(--primary)' : 'transparent',
+                                color: selectedRole === role ? '#fff' : 'var(--text-secondary)',
+                                border: `1px solid ${selectedRole === role ? 'var(--primary)' : 'var(--border-color)'}`,
+                                padding: '6px 14px',
+                                borderRadius: '20px',
+                                cursor: 'pointer',
+                                fontSize: '0.85rem',
+                                fontWeight: '500',
+                                transition: 'all 0.2s'
+                            }}
+                        >
+                            {role}
+                        </button>
+                    ))}
+                </div>
+                {selectedRole !== 'All' && (
+                    <div style={{ marginTop: '10px', fontSize: '0.85rem', color: 'var(--accent)' }}>
+                        ✨ Highlighting content relevant for <strong>{selectedRole}</strong> roles
+                    </div>
+                )}
+            </div>
+
             <div className="preview-header">
-                {data.profilePicture && (
+                {processedData.profilePicture && (
                     <img
-                        src={data.profilePicture}
+                        src={processedData.profilePicture}
                         alt="Profile"
                         style={{
                             width: '150px',
@@ -100,27 +201,27 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                     />
                 )}
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '8px', color: 'var(--text-main)' }}>
-                    {data.fullName || data.username || 'Student Portfolio'}
+                    {processedData.fullName || processedData.username || 'Student Portfolio'}
                 </h1>
 
 
                 {/* Contact Info Row */}
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
-                    {data.email && <span>📧 {data.email}</span>}
-                    {data.contact && <span>📱 {data.contact}</span>}
-                    {data.dob && <span>🎂 {new Date(data.dob).toLocaleDateString()}</span>}
+                    {processedData.email && <span>📧 {processedData.email}</span>}
+                    {processedData.contact && <span>📱 {processedData.contact}</span>}
+                    {processedData.dob && <span>🎂 {new Date(processedData.dob).toLocaleDateString()}</span>}
                 </div>
 
                 {/* Social Links Row */}
-                {data.social && (data.social.github || data.social.linkedin) && (
+                {processedData.social && (processedData.social.github || processedData.social.linkedin) && (
                     <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '15px' }}>
-                        {data.social.github && (
-                            <a href={data.social.github} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                        {processedData.social.github && (
+                            <a href={processedData.social.github} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
                                 GitHub
                             </a>
                         )}
-                        {data.social.linkedin && (
-                            <a href={data.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                        {processedData.social.linkedin && (
+                            <a href={processedData.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
                                 LinkedIn
                             </a>
                         )}
@@ -131,21 +232,21 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {/* About Section */}
             <div className="preview-section">
                 <h2 className="section-title">About Me</h2>
-                {data.about ? (
-                    <p className="section-content">{data.about}</p>
+                {processedData.about ? (
+                    <p className="section-content">{processedData.about}</p>
                 ) : (
                     <p className="empty-state">No about section added yet</p>
                 )}
             </div>
 
             {/* Experience / Internships Section */}
-            {(data.experiences?.length > 0 || data.internships?.length > 0) && (
+            {(processedData.experiences?.length > 0 || processedData.internships?.length > 0) && (
                 <div className="preview-section">
                     <h2 className="section-title">
-                        {data.experienceType === 'experienced' ? 'Work Experience' : 'Internships'}
+                        {processedData.experienceType === 'experienced' ? 'Work Experience' : 'Internships'}
                     </h2>
                     <div className="experience-list">
-                        {data.experienceType === 'experienced' && data.experiences?.map((exp, i) => (
+                        {processedData.experienceType === 'experienced' && processedData.experiences?.map((exp, i) => (
                             <div key={i} className="experience-card">
                                 <h3>{exp.role}</h3>
                                 <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{exp.company}</p>
@@ -153,7 +254,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                             </div>
                         ))}
 
-                        {data.experienceType !== 'experienced' && data.internships?.map((int, i) => (
+                        {processedData.experienceType !== 'experienced' && processedData.internships?.map((int, i) => (
                             <div key={i} className="experience-card">
                                 <h3>{int.role}</h3>
                                 <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{int.company}</p>
@@ -165,11 +266,11 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             )}
 
             {/* Achievements Section */}
-            {data.achievements && data.achievements.length > 0 && (
+            {processedData.achievements && processedData.achievements.length > 0 && (
                 <div className="preview-section">
                     <h2 className="section-title">Achievements</h2>
                     <div className="achievements-list">
-                        {data.achievements.map((ach, index) => (
+                        {processedData.achievements.map((ach, index) => (
                             <div key={index} className="experience-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                                 {ach.image && (
                                     <img
@@ -205,10 +306,13 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {/* Skills Section */}
             <div className="preview-section">
                 <h2 className="section-title">Skills</h2>
-                {data.skills && data.skills.length > 0 ? (
+                {processedData.skills && processedData.skills.length > 0 ? (
                     <div className="skills-grid">
-                        {data.skills.map((skill, index) => (
-                            <div key={index} className="skill-tag">
+                        {processedData.skills.map((skill, index) => (
+                            <div key={index} className="skill-tag" style={{
+                                opacity: selectedRole === 'All' ? 1 : (getRelevance({ title: skill }, selectedRole).score > 0 ? 1 : 0.4),
+                                order: selectedRole === 'All' ? 0 : (getRelevance({ title: skill }, selectedRole).score > 0 ? -1 : 1)
+                            }}>
                                 {skill}
                             </div>
                         ))}
@@ -221,11 +325,34 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
             {/* Projects Section */}
             <div className="preview-section">
                 <h2 className="section-title">Projects</h2>
-                {data.projects && data.projects.length > 0 ? (
+                {processedData.projects && processedData.projects.length > 0 ? (
                     <div className="projects-list">
-                        {data.projects.map((project, index) => (
-                            <div key={index} className="project-card">
+                        {processedData.projects.map((project, index) => (
+                            <div key={index} className="project-card" style={{
+                                opacity: selectedRole === 'All' || project._score > 0 ? 1 : 0.5,
+                                transform: selectedRole !== 'All' && project._score === 0 ? 'scale(0.98)' : 'none'
+                            }}>
+                                {project.image && (
+                                    <img
+                                        src={project.image}
+                                        alt="Project"
+                                        style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px' }}
+                                    />
+                                )}
                                 <h3>{project.title}</h3>
+                                {selectedRole !== 'All' && project._relevanceText && (
+                                    <div style={{
+                                        marginBottom: '10px',
+                                        fontSize: '0.85rem',
+                                        color: '#059669',
+                                        background: '#ecfdf5',
+                                        padding: '4px 8px',
+                                        borderRadius: '4px',
+                                        display: 'inline-block'
+                                    }}>
+                                        💡 {project._relevanceText}
+                                    </div>
+                                )}
                                 <p>{project.description}</p>
                                 {project.technologies && project.technologies.length > 0 && (
                                     <div style={{ marginTop: '15px' }}>

@@ -55,7 +55,8 @@ const portfolioSchema = new mongoose.Schema({
         description: { type: String, required: true },
         technologies: [String],
         link: String,
-        githubLink: String // Optional Repo Link
+        githubLink: String, // Optional Repo Link
+        image: String // Project Screenshot/Logo (Base64)
     }],
 
     // 5. ACADEMIC FOUNDATION (Education)

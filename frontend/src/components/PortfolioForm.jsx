@@ -64,7 +64,38 @@ function PortfolioForm() {
     const [projectTech, setProjectTech] = useState('');
     const [projectLink, setProjectLink] = useState('');
     const [projectRepo, setProjectRepo] = useState('');
+    const [projectImage, setProjectImage] = useState('');
     const [projects, setProjects] = useState([]);
+
+    // ...
+
+    // Project Image Handler
+    const handleProjectImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProjectImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // ...
+
+    const addProject = () => {
+        if (projectTitle && projectDescription) {
+            setProjects([...projects, {
+                title: projectTitle,
+                description: projectDescription,
+                technologies: projectTech.split(',').map(t => t.trim()).filter(t => t),
+                link: projectLink,
+                githubLink: projectRepo,
+                image: projectImage
+            }]);
+            setProjectTitle(''); setProjectDescription(''); setProjectTech(''); setProjectLink(''); setProjectRepo(''); setProjectImage('');
+        }
+    };
 
     // 5. Education REMOVED
 
@@ -178,18 +209,7 @@ function PortfolioForm() {
             setAchievementLink('');
         }
     };
-    const addProject = () => {
-        if (projectTitle && projectDescription) {
-            setProjects([...projects, {
-                title: projectTitle,
-                description: projectDescription,
-                technologies: projectTech.split(',').map(t => t.trim()).filter(t => t),
-                link: projectLink,
-                githubLink: projectRepo
-            }]);
-            setProjectTitle(''); setProjectDescription(''); setProjectTech(''); setProjectLink(''); setProjectRepo('');
-        }
-    };
+
     const handleSubmit = async () => {
         const portfolioData = {
             username, fullName, profilePicture, about, contact, email, dob,
@@ -377,6 +397,11 @@ function PortfolioForm() {
                                 <label className="input-label">Tech Stack</label>
                                 <input type="text" placeholder="e.g. React, Node.js, MongoDB" value={projectTech} onChange={(e) => setProjectTech(e.target.value)} className="form-group-input" />
                             </div>
+                            <div style={{ marginBottom: '15px' }}>
+                                <label className="input-label">Project Image</label>
+                                <input type="file" accept="image/*" onChange={handleProjectImageUpload} className="form-group-input" />
+                                {projectImage && <img src={projectImage} alt="Preview" style={{ width: '100px', height: '60px', borderRadius: '4px', marginTop: '10px', objectFit: 'cover' }} />}
+                            </div>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
                                 <div>
                                     <label className="input-label">Live Link (Optional)</label>
@@ -391,9 +416,12 @@ function PortfolioForm() {
 
                             <div className="added-items-list" style={{ marginTop: '20px' }}>
                                 {projects.map((p, i) => (
-                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)' }}>
-                                        <strong>{p.title}</strong>
-                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '5px 0 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.description}</p>
+                                    <div key={i} className="added-item-card" style={{ background: 'white', padding: '10px', borderRadius: '8px', marginBottom: '10px', boxShadow: 'var(--shadow-soft)', border: '1px solid var(--border-color)', display: 'flex', gap: '10px' }}>
+                                        {p.image && <img src={p.image} style={{ width: '50px', height: '50px', borderRadius: '4px', objectFit: 'cover' }} />}
+                                        <div>
+                                            <strong>{p.title}</strong>
+                                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '5px 0 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.description}</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
