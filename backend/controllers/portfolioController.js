@@ -7,6 +7,7 @@ exports.savePortfolio = async (req, res) => {
         const {
             username,
             fullName, // Added fullName
+            profilePicture, // New Profile Picture
             about,
             contact,
             email,
@@ -38,6 +39,7 @@ exports.savePortfolio = async (req, res) => {
 
         // Update existing portfolio
         portfolio.fullName = fullName || portfolio.fullName;
+        portfolio.profilePicture = profilePicture || portfolio.profilePicture;
         portfolio.about = about || portfolio.about;
         portfolio.contact = contact || portfolio.contact;
         portfolio.email = email || portfolio.email;
@@ -146,6 +148,7 @@ exports.getPreviewPortfolio = async (req, res) => {
             data: {
                 username: portfolio.username,
                 fullName: portfolio.fullName, // New
+                profilePicture: portfolio.profilePicture, // New
                 about: portfolio.about,
                 contact: portfolio.contact, // New
                 email: portfolio.email, // New
@@ -197,6 +200,7 @@ exports.getPublicPortfolio = async (req, res) => {
             data: {
                 username: portfolio.username,
                 fullName: portfolio.fullName, // New
+                profilePicture: portfolio.profilePicture, // New
                 about: portfolio.about,
                 contact: portfolio.contact, // New
                 email: portfolio.email, // New

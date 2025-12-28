@@ -13,6 +13,7 @@ const portfolioSchema = new mongoose.Schema({
 
     // 1. PERSONAL ESSENCE
     fullName: { type: String, default: '' }, // New Display Name
+    profilePicture: { type: String, default: '' }, // Base64 Image String
     about: { type: String, default: '' },
     contact: { type: String, default: '' },
     email: { type: String, default: '' },

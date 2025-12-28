@@ -85,6 +85,20 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
     return (
         <div className={`preview-container template-${template}`}>
             <div className="preview-header">
+                {data.profilePicture && (
+                    <img
+                        src={data.profilePicture}
+                        alt="Profile"
+                        style={{
+                            width: '150px',
+                            height: '150px',
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            marginBottom: '20px',
+                            border: '4px solid var(--primary)'
+                        }}
+                    />
+                )}
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '8px', color: 'var(--text-main)' }}>
                     {data.fullName || data.username || 'Student Portfolio'}
                 </h1>

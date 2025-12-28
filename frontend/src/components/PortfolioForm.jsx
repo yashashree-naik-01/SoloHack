@@ -12,10 +12,24 @@ function PortfolioForm() {
     // 1. Personal Details
     const [username, setUsername] = useState('');
     const [fullName, setFullName] = useState(''); // Added missing state
+    const [profilePicture, setProfilePicture] = useState(''); // Base64 Image
     const [about, setAbout] = useState('');
     const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
     const [dob, setDob] = useState('');
+
+
+    // Image Upload Handler
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfilePicture(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     // 2. Skills
     const [skills, setSkills] = useState('');
@@ -70,6 +84,7 @@ function PortfolioForm() {
                         setSavedCompletion(p.completionPercentage || 0);
                         // Pre-fill form
                         setFullName(p.fullName || ''); // Added pre-fill
+                        setProfilePicture(p.profilePicture || '');
                         setAbout(p.about || '');
                         setContact(p.contact || '');
                         setEmail(p.email || '');
@@ -157,7 +172,7 @@ function PortfolioForm() {
 
     const handleSubmit = async () => {
         const portfolioData = {
-            username, fullName, about, contact, email, dob,
+            username, fullName, profilePicture, about, contact, email, dob,
             skills: skills.split(',').map(s => s.trim()).filter(s => s),
             experienceType, experiences, internships,
             projects, education,
@@ -216,6 +231,11 @@ function PortfolioForm() {
                     <div className="form-group">
                         <label>Full Name</label>
                         <input type="text" placeholder="John Doe" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Profile Picture</label>
+                        <input type="file" accept="image/*" onChange={handleImageUpload} />
+                        {profilePicture && <img src={profilePicture} alt="Profile Preview" style={{ width: '100px', height: '100px', borderRadius: '50%', marginTop: '10px', objectFit: 'cover' }} />}
                     </div>
                     <div className="form-group">
                         <label>Username (Logged In)</label>
