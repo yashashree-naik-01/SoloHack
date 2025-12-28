@@ -235,7 +235,7 @@ function PortfolioForm() {
                     <div className="form-group">
                         <label>Profile Picture</label>
                         <input type="file" accept="image/*" onChange={handleImageUpload} />
-                        {profilePicture && <img src={profilePicture} alt="Profile Preview" style={{ width: '100px', height: '100px', borderRadius: '50%', marginTop: '10px', objectFit: 'cover' }} />}
+                        {profilePicture && <img src={profilePicture} alt="Profile Preview" style={{ width: '100px', height: '100px', borderRadius: '8px', marginTop: '10px', objectFit: 'cover' }} />}
                     </div>
                     <div className="form-group">
                         <label>Username (Logged In)</label>

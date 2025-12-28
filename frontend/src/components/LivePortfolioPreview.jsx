@@ -92,7 +92,7 @@ function LivePortfolioPreview({ username, portfolioData, template = 'minimal' })
                         style={{
                             width: '150px',
                             height: '150px',
-                            borderRadius: '50%',
+                            borderRadius: '12px',
                             objectFit: 'cover',
                             marginBottom: '20px',
                             border: '4px solid var(--primary)'
