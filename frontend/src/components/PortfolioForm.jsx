@@ -54,6 +54,7 @@ function PortfolioForm() {
     // Response & Progress
     const [response, setResponse] = useState(null);
     const [progress, setProgress] = useState(0);
+    const [savedCompletion, setSavedCompletion] = useState(0); // Real completion from DB
 
     // Load Data on Mount
     useEffect(() => {
@@ -66,6 +67,7 @@ function PortfolioForm() {
                     const data = await res.json();
                     if (data.success) {
                         const p = data.data;
+                        setSavedCompletion(p.completionPercentage || 0);
                         // Pre-fill form
                         setFullName(p.fullName || ''); // Added pre-fill
                         setAbout(p.about || '');
@@ -172,6 +174,9 @@ function PortfolioForm() {
 
             if (res.ok && data.success) {
                 setResponse(data);
+                if (data.data && data.data.completionPercentage) {
+                    setSavedCompletion(data.data.completionPercentage);
+                }
                 setProgress(100); // 100% on save
                 alert('✅ Portfolio Saved Successfully!');
             } else {
@@ -188,7 +193,11 @@ function PortfolioForm() {
             {/* Progress Bar */}
             <div className="quest-bar-container">
                 <div className="quest-info">
-                    <span>Portfolio Creation</span>
+                    <span>
+                        Portfolio Creation
+                        {savedCompletion >= 100 && <span className="badge-complete" style={{ marginLeft: '10px', fontSize: '0.8em', background: '#10b981', color: 'white', padding: '2px 8px', borderRadius: '12px' }}>✅ 100% Complete</span>}
+                        {savedCompletion < 100 && savedCompletion > 0 && <span className="badge-progress" style={{ marginLeft: '10px', fontSize: '0.8em', background: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '12px' }}>{savedCompletion}% Saved</span>}
+                    </span>
                     <span>Step {currentStep} of {totalSteps}</span>
                 </div>
                 <div className="quest-track">
